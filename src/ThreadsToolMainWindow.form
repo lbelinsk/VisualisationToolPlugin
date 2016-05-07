@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ThreadsToolMainWindow">
-  <grid id="27dc6" binding="MainGrid" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="15" left="15" bottom="15" right="15"/>
+  <grid id="27dc6" binding="MainPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
     <constraints>
-      <xy x="20" y="20" width="2000" height="2000"/>
+      <xy x="20" y="20" width="800" height="600"/>
     </constraints>
     <properties>
       <alignmentX value="1.0"/>
@@ -12,9 +11,9 @@
       <enabled value="true"/>
       <foreground color="-7038564"/>
       <inheritsPopupMenu value="false"/>
-      <minimumSize width="1200" height="900"/>
+      <minimumSize width="800" height="600"/>
       <opaque value="false"/>
-      <preferredSize width="1200" height="900"/>
+      <preferredSize width="1200" height="800"/>
     </properties>
     <border type="etched" title="Threads Visualisation Tool" title-justification="2" title-position="1">
       <font name="Arial Black" size="18" style="1"/>
@@ -22,18 +21,8 @@
       <color color="-16579060"/>
     </border>
     <children>
-      <component id="c42ae" class="javax.swing.JButton" binding="MyButton">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Button"/>
-        </properties>
-      </component>
       <vspacer id="41d62">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
+        <constraints/>
       </vspacer>
     </children>
   </grid>

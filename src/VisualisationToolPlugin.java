@@ -1,6 +1,7 @@
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import org.json.*;
+
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -41,7 +42,7 @@ public class VisualisationToolPlugin extends AnAction
                     jsonString = new String(Files.readAllBytes(filePath));
                     JSONObject jsonObject = new JSONObject(jsonString);
                     ThreadInfo newThread = new ThreadInfo();
-                    initThread(newThread, jsonObject);
+                    initThread(newThread, jsonObject, dir);
                     threadsList.add(newThread);
                 }
             }
@@ -51,7 +52,7 @@ public class VisualisationToolPlugin extends AnAction
         }
     }
 
-    private void initThread(ThreadInfo newThread, JSONObject jsonObject)
+    private void initThread(ThreadInfo newThread, JSONObject jsonObject, Path dir)
     {
         newThread.model = jsonObject.getString("model");
         newThread.osName = jsonObject.getString("osname");
@@ -71,6 +72,12 @@ public class VisualisationToolPlugin extends AnAction
             newAction.ctxName = obj.getString("ctx_name");
             newAction.info = obj.getString("threadsinfo");
 
+            Path imagePath = dir.resolve(String.valueOf(newAction.id) + ".png");
+            if (Files.exists(imagePath))
+                newAction.imagePath = imagePath;
+            else
+                newAction.imagePath = null;
+
             newThread.actions.add(newAction);
         }
     }
@@ -78,7 +85,6 @@ public class VisualisationToolPlugin extends AnAction
     @Override
     public void actionPerformed(AnActionEvent event)
     {
-        ThreadsToolMainWindow mainWindow = new ThreadsToolMainWindow();
-
+        new ThreadsToolMainWindow("Threads Visualisation Tool", threadsList);
     }
 }
