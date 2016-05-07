@@ -6,6 +6,7 @@ import javax.swing.*;
 public class ThreadsToolMainWindow extends JFrame
 {
     private JPanel MainGrid;
+    private JButton MyButton;
 
     public ThreadsToolMainWindow()
     {

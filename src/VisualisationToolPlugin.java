@@ -11,5 +11,6 @@ public class VisualisationToolPlugin extends AnAction
     public void actionPerformed(AnActionEvent event)
     {
         ThreadsToolMainWindow mainWindow = new ThreadsToolMainWindow();
+
     }
 }
