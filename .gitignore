@@ -1,8 +1,4 @@
-/.idea/workspace.xml
-/.idea/libraries
-/build
-/out
-/.idea
-.idea/workspace.xml
+out/
+.idea/
 .idea/workspace.xml
 out/production/VisualisationToolPlugin/VisualisationToolPlugin.class
