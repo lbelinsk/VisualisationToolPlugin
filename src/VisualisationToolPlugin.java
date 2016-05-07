@@ -2,6 +2,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import org.json.*;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,29 +25,30 @@ public class VisualisationToolPlugin extends AnAction
 
     private void initThreadsList()
     {
-        Path path = Paths.get(System.getProperty("user.home"),
+        String jsonString;
+        Path dir = Paths.get(System.getProperty("user.home"),
                 "IdeaProjects",
                 "VisualisationToolPlugin",
                 "temp",
-                "com.kayak.android",
-                "1431607915907.json");
-        String jsonString = null;
-        try{
-            jsonString = new String(Files.readAllBytes(path));
+                "com.kayak.android");
+
+        try (DirectoryStream<Path> stream =
+             Files.newDirectoryStream(dir, "*.json")) {
+            for (Path filePath: stream)
+            {
+                if (Files.isReadable(filePath))
+                {
+                    jsonString = new String(Files.readAllBytes(filePath));
+                    JSONObject jsonObject = new JSONObject(jsonString);
+                    ThreadInfo newThread = new ThreadInfo();
+                    initThread(newThread, jsonObject);
+                    threadsList.add(newThread);
+                }
+            }
         }
         catch (IOException x){
             System.err.format("IOException: %s%n", x);
         }
-
-        JSONObject jsonObject = new JSONObject(jsonString);
-        ThreadInfo newThread = new ThreadInfo();
-
-        initThread(newThread, jsonObject);
-        threadsList.add(newThread);
-
-        boolean cond = Files.isRegularFile(path) &
-                Files.isReadable(path) &
-                Files.isExecutable(path);
     }
 
     private void initThread(ThreadInfo newThread, JSONObject jsonObject)
