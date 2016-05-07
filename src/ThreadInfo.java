@@ -4,14 +4,14 @@ import java.util.List;
 /**
  * Created by Sandro on 5/7/2016.
  */
-public class ThreadInfo
+class ThreadInfo
 {
-    public String model;
-    public String osName;
-    public long sessionStartTime;
-    public List<ThreadAction> actions;
+    String model;
+    String osName;
+    long sessionStartTime;
+    List<ThreadAction> actions;
 
-    public ThreadInfo()
+    ThreadInfo()
     {
         this.model = "";
         this.osName = "";

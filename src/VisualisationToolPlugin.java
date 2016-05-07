@@ -1,7 +1,6 @@
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import org.json.*;
-
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -27,6 +26,7 @@ public class VisualisationToolPlugin extends AnAction
     private void initThreadsList()
     {
         String jsonString;
+        //TODO: dynamically find a relevant path. Alert if no jsons found
         Path dir = Paths.get(System.getProperty("user.home"),
                 "IdeaProjects",
                 "VisualisationToolPlugin",
