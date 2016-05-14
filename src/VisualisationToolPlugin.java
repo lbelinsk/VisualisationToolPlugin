@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Collections;
 
 /**
  * Created by Sandro on 4/30/2016.
@@ -16,15 +16,17 @@ import java.util.List;
 public class VisualisationToolPlugin extends AnAction
 {
     private List<ThreadInfo> threadsList;
+    private List<List<ThreadInfo> > sessions;
 
     public VisualisationToolPlugin()
     {
-        threadsList = new ArrayList<>();
         initThreadsList();
+        initSessions();
     }
 
     private void initThreadsList()
     {
+        this.threadsList = new ArrayList<>();
         String jsonString;
         //TODO: dynamically find a relevant path. Alert if no jsons found
         Path dir = Paths.get(System.getProperty("user.home"),
@@ -45,11 +47,17 @@ public class VisualisationToolPlugin extends AnAction
                     initThread(newThread, jsonObject, dir);
                     threadsList.add(newThread);
                 }
+                else {
+                   System.out.println(filePath + "not readable");
+                }
             }
         }
         catch (IOException x){
             System.err.format("IOException: %s%n", x);
         }
+
+        // sort threadsList from newest to oldest actions
+        Collections.sort(threadsList);
     }
 
     private void initThread(ThreadInfo newThread, JSONObject jsonObject, Path dir)
@@ -82,9 +90,39 @@ public class VisualisationToolPlugin extends AnAction
         }
     }
 
+    private void initSessions()
+    {
+        this.sessions = new ArrayList<>();
+        int i = 0;
+        while ( i < this.size()) {
+            long currentSession = this.threadsList.get(i).getSessionStartTime();
+            List<ThreadInfo> session = new ArrayList<>();
+            while ( i < this.size() && this.threadsList.get(i).getSessionStartTime() == currentSession) {
+                session.add(this.threadsList.get(i));
+                i++;
+            }
+            List<ThreadInfo> se = new ArrayList<>(session);
+            this.sessions.add((se));
+            i++;
+        }
+    }
+
     @Override
     public void actionPerformed(AnActionEvent event)
     {
-        new ThreadsToolMainWindow("Threads Visualisation Tool", threadsList);
+        new ThreadsToolMainWindow("Threads Visualisation Tool", sessions);
     }
+
+    public int size() {
+        return threadsList.size();
+    }
+
+    public int numOfSessions()
+    {
+        return sessions.size();
+    }
+
+
+
 }
+

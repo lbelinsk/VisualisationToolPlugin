@@ -13,4 +13,10 @@ class ThreadAction
     long startTime;
     String ctxName;
     Object info;
+
+    public int getUaSeq()
+    {
+        return this.uaSeq;
+    }
+
 }
