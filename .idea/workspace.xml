@@ -2,29 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a315a0b3-17ad-4b9b-973f-3c6a845e5c52" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/1066034388046379261.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/111408579521659332.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/11764190983804716.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/1431607630853.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/1431607723026.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/1431607757941.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/1431607789875.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/1431607881547.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/1431607915907.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/198009959290537129.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/238084205272258291.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/265860093560819676.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/378008737329685463.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/426166945479336232.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/467502239879129374.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/813093155366853799.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/950878915593400803.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp/com.kayak.android/986985752386715059.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ThreadAction.java" afterPath="$PROJECT_DIR$/src/ThreadAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ThreadInfo.java" afterPath="$PROJECT_DIR$/src/ThreadInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ThreadsToolMainWindow.java" afterPath="$PROJECT_DIR$/src/ThreadsToolMainWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/VisualisationToolPlugin.java" afterPath="$PROJECT_DIR$/src/VisualisationToolPlugin.java" />
     </list>
     <ignored path="VisualisationToolPlugin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -692,7 +670,14 @@
       <option name="project" value="LOCAL" />
       <updated>1462653829037</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="changed the support from threadList to Sessions List">
+      <created>1463269186639</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1463269186639</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -713,7 +698,7 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32378855" sideWeight="0.4425428" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18171807" sideWeight="0.55929095" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18171807" sideWeight="0.55929095" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32964602" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18171807" sideWeight="0.44070905" order="2" side_tool="false" content_ui="tabs" />
@@ -752,7 +737,8 @@
     <MESSAGE value="Dealing with one Json file" />
     <MESSAGE value="Dealing with all Json files" />
     <MESSAGE value="Retrieve available images path for each action" />
-    <option name="LAST_COMMIT_MESSAGE" value="Retrieve available images path for each action" />
+    <MESSAGE value="changed the support from threadList to Sessions List" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed the support from threadList to Sessions List" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
