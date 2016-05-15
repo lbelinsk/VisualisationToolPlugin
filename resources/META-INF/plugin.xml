@@ -46,8 +46,6 @@
             icon="/icons/VisualisationToolIcon.png"
             description="The tool visualises the threads of android application using HPE-instrumented APK">
       <add-to-group group-id="MainToolBar" anchor="last"/>
-      <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt V" second-keystroke="T"/>
-      <keyboard-shortcut keymap="Mac OS X" first-keystroke="control V" second-keystroke="T"/>
     </action>
   </actions>
 

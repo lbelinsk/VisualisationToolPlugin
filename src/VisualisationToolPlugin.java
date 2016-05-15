@@ -1,5 +1,6 @@
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.jcraft.jsch.Session;
 import org.json.*;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -10,23 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
-/**
- * Created by Sandro on 4/30/2016.
- */
 public class VisualisationToolPlugin extends AnAction
 {
-    private List<ThreadInfo> threadsList;
-    private List<List<ThreadInfo> > sessions;
+    private List<JsonFile> jsonFilesList;
+    private ArrayList<UserSession> sessionsList;
 
     public VisualisationToolPlugin()
     {
-        initThreadsList();
-        initSessions();
+        initJsonFilesList();
+        initSessionsList();
     }
 
-    private void initThreadsList()
+    private void initJsonFilesList()
     {
-        this.threadsList = new ArrayList<>();
+        this.jsonFilesList = new ArrayList<>();
         String jsonString;
         //TODO: dynamically find a relevant path. Alert if no jsons found
         Path dir = Paths.get(System.getProperty("user.home"),
@@ -43,9 +41,9 @@ public class VisualisationToolPlugin extends AnAction
                 {
                     jsonString = new String(Files.readAllBytes(filePath));
                     JSONObject jsonObject = new JSONObject(jsonString);
-                    ThreadInfo newThread = new ThreadInfo();
-                    initThread(newThread, jsonObject, dir);
-                    threadsList.add(newThread);
+                    JsonFile newJsonFile = new JsonFile();
+                    initJsonFile(newJsonFile, jsonObject, dir);
+                    jsonFilesList.add(newJsonFile);
                 }
                 else {
                    System.out.println(filePath + "not readable");
@@ -55,22 +53,19 @@ public class VisualisationToolPlugin extends AnAction
         catch (IOException x){
             System.err.format("IOException: %s%n", x);
         }
-
-        // sort threadsList from newest to oldest actions
-        Collections.sort(threadsList);
     }
 
-    private void initThread(ThreadInfo newThread, JSONObject jsonObject, Path dir)
+    private void initJsonFile(JsonFile newJsonFile, JSONObject jsonObject, Path dir)
     {
-        newThread.model = jsonObject.getString("model");
-        newThread.osName = jsonObject.getString("osname");
-        newThread.sessionStartTime = jsonObject.getLong("session_start_time");
+        newJsonFile.model = jsonObject.getString("model");
+        newJsonFile.osName = jsonObject.getString("osname");
+        newJsonFile.sessionStartTime = jsonObject.getLong("session_start_time");
 
         JSONArray arr = jsonObject.getJSONArray("actions");
         for (int i=0; i<arr.length(); i++)
         {
             JSONObject obj = arr.getJSONObject(i);
-            ThreadAction newAction = new ThreadAction();
+            UserAction newAction = new UserAction();
 
             newAction.name = obj.getString("action_name");
             newAction.id = obj.getLong("actionid");
@@ -86,43 +81,43 @@ public class VisualisationToolPlugin extends AnAction
             else
                 newAction.imagePath = null;
 
-            newThread.actions.add(newAction);
+            newJsonFile.actions.add(newAction);
         }
     }
 
-    private void initSessions()
+    private void initSessionsList()
     {
-        this.sessions = new ArrayList<>();
-        int i = 0;
-        while ( i < this.size()) {
-            long currentSession = this.threadsList.get(i).getSessionStartTime();
-            List<ThreadInfo> session = new ArrayList<>();
-            while ( i < this.size() && this.threadsList.get(i).getSessionStartTime() == currentSession) {
-                session.add(this.threadsList.get(i));
-                i++;
+        this.sessionsList = new ArrayList<>();
+        if (jsonFilesList.isEmpty())
+            return;
+
+        Collections.sort(jsonFilesList);
+        JsonFile []allJsonFiles = new JsonFile[jsonFilesList.size()];
+        jsonFilesList.toArray(allJsonFiles);
+
+        for (int i = 0; i < allJsonFiles.length; i++)
+        {
+            if (i != 0 && isSameSession(allJsonFiles[i], allJsonFiles[i-1]))
+            {
+                UserSession lastAddedSession = sessionsList.get(sessionsList.size()-1);
+                lastAddedSession.mergeWith(allJsonFiles[i].actions);
             }
-            List<ThreadInfo> se = new ArrayList<>(session);
-            this.sessions.add((se));
-            i++;
+            else
+            {
+                sessionsList.add(new UserSession(allJsonFiles[i]));
+            }
         }
+    }
+
+    private boolean isSameSession(JsonFile file1, JsonFile file2)
+    {
+        return (file1.compareTo(file2) == 0);
     }
 
     @Override
     public void actionPerformed(AnActionEvent event)
     {
-        new ThreadsToolMainWindow("Threads Visualisation Tool", sessions);
+        new ThreadsToolMainWindow("Threads Visualisation Tool", sessionsList);
     }
-
-    public int size() {
-        return threadsList.size();
-    }
-
-    public int numOfSessions()
-    {
-        return sessions.size();
-    }
-
-
-
 }
 

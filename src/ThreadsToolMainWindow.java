@@ -1,25 +1,23 @@
-import com.intellij.ui.components.JBScrollPane;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Sandro on 5/5/2016.
  */
 public class ThreadsToolMainWindow extends JFrame
 {
-    private final List <List<ThreadInfo> > sessions;
+    private final ArrayList<UserSession> sessions;
     private JPanel MainPanel;
-    private JPanel LeftMenue;
-    private JTextArea RightMenue;
+    private JPanel LeftMenu;
+    private JTextArea RightMenu;
 
-    public ThreadsToolMainWindow(String title, List<List<ThreadInfo> > sessions)
+    public ThreadsToolMainWindow(String title, ArrayList<UserSession> userSessions)
     {
         super(title);
-        this.sessions = sessions;
+        this.sessions = userSessions;
         super.frameInit();
 
         // set Layout manager
@@ -34,8 +32,8 @@ public class ThreadsToolMainWindow extends JFrame
   */
 
         // Add component to content pane
-        MainPanel.add(RightMenue, BorderLayout.CENTER);
-        MainPanel.add(LeftMenue, BorderLayout.WEST);
+        MainPanel.add(RightMenu, BorderLayout.CENTER);
+        MainPanel.add(LeftMenu, BorderLayout.WEST);
 
         //change the java icon
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/VisualisationToolIcon.png"));
@@ -51,22 +49,22 @@ public class ThreadsToolMainWindow extends JFrame
 
     void initRightMenue()
     {
-        RightMenue = new JTextArea();
-        RightMenue.setBackground(Color.WHITE);
-        RightMenue.setFont(RightMenue.getFont().deriveFont(16f));
-        RightMenue.setForeground(Color.BLACK);
+        RightMenu = new JTextArea();
+        RightMenu.setBackground(Color.WHITE);
+        RightMenu.setFont(RightMenu.getFont().deriveFont(16f));
+        RightMenu.setForeground(Color.BLACK);
     }
 
-    void initLeftMenue(List<List<ThreadInfo> > sessions)
+    void initLeftMenue(ArrayList<UserSession> sessions)
     {
-        LeftMenue = new JPanel();
-        Dimension d = LeftMenue.getPreferredSize();
+        LeftMenu = new JPanel();
+        Dimension d = LeftMenu.getPreferredSize();
         d.width = 400;
-        LeftMenue.setPreferredSize(d);
-        LeftMenue.setBorder(BorderFactory.createTitledBorder("Sessions"));
-        LeftMenue.setBackground(Color.getColor("658017"));
+        LeftMenu.setPreferredSize(d);
+        LeftMenu.setBorder(BorderFactory.createTitledBorder("Sessions"));
+        LeftMenu.setBackground(Color.getColor("658017"));
 
-        LeftMenue.setLayout(new GridBagLayout());
+        LeftMenu.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
 
         JButton buttons[];
@@ -88,10 +86,10 @@ public class ThreadsToolMainWindow extends JFrame
             buttons[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    RightMenue.append("ShowThread Info Of Session #" + String.valueOf(j) + "\n");
+                    RightMenu.append("ShowThread Info Of Session #" + String.valueOf(j) + "\n");
                 }
             });
-            LeftMenue.add(buttons[i], gc);
+            LeftMenu.add(buttons[i], gc);
             gc.gridy += 1;
         }
     }
