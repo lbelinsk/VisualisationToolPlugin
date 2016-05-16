@@ -40,6 +40,7 @@
               <splitpane position="left"/>
             </constraints>
             <properties>
+              <background color="-11904630"/>
               <foreground color="-12828863"/>
             </properties>
             <border type="none"/>
@@ -47,11 +48,13 @@
               <component id="aabb8" class="javax.swing.JLabel">
                 <constraints border-constraint="North"/>
                 <properties>
-                  <font swing-font="Label.font"/>
+                  <background color="-1"/>
+                  <font name="Segoe UI" size="18" style="0"/>
+                  <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="2"/>
                   <labelFor value="1729a"/>
-                  <text value="Available &amp;sessions"/>
+                  <text value="Available &amp;Sessions"/>
                 </properties>
               </component>
               <scrollpane id="1729a">
@@ -63,7 +66,12 @@
                 <children>
                   <component id="57030" class="javax.swing.JList" binding="SessionsList">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <background color="-11577242"/>
+                      <foreground color="-1"/>
+                      <selectionBackground color="-1475294"/>
+                      <selectionMode value="0"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
@@ -73,16 +81,23 @@
             <constraints>
               <splitpane position="right"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-11904630"/>
+              <foreground color="-12828863"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="2b575" class="javax.swing.JLabel">
                 <constraints border-constraint="North"/>
                 <properties>
-                  <font swing-font="Label.font"/>
+                  <font name="Segoe UI" size="18" style="0"/>
+                  <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="2"/>
                   <labelFor value="46adf"/>
+                  <maximumSize width="121" height="21"/>
+                  <minimumSize width="121" height="21"/>
+                  <preferredSize width="121" height="21"/>
                   <text value="&amp;Actions per session"/>
                 </properties>
               </component>
@@ -95,7 +110,12 @@
                 <children>
                   <component id="fe5e6" class="javax.swing.JList" binding="ActionsList">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <background color="-11577242"/>
+                      <foreground color="-1"/>
+                      <selectionBackground color="-1475294"/>
+                      <selectionMode value="0"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
@@ -103,6 +123,25 @@
           </grid>
         </children>
       </splitpane>
+      <grid id="5ad72" binding="CentralPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <background color="-131586"/>
+          <foreground color="-11710638"/>
+        </properties>
+        <border type="bevel-raised"/>
+        <children>
+          <component id="f27f3" class="javax.swing.JLabel" binding="centralImageLabel">
+            <constraints border-constraint="North"/>
+            <properties>
+              <horizontalAlignment value="2"/>
+              <maximumSize width="50" height="80"/>
+              <preferredSize width="50" height="80"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
   <inspectionSuppressions>

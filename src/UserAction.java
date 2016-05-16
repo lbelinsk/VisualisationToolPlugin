@@ -1,4 +1,5 @@
 import org.jetbrains.annotations.NotNull;
+import sun.plugin.util.UIUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +40,7 @@ class UserAction implements Comparable<UserAction>
 
     @SuppressWarnings("UndesirableClassUsage")
     //TODO: consider storing small icons as members for faster rendering. (maybe the delay is from BufferedImage usage)
-    Icon getSmallIcon()
+    ImageIcon getSmallIcon()
     {
         ImageIcon newIcon;
         if (imagePath == null)
@@ -53,6 +54,22 @@ class UserAction implements Comparable<UserAction>
             Image img = icon.getImage();
             Image newImg = img.getScaledInstance(30, 40, java.awt.Image.SCALE_SMOOTH);
             newIcon = new ImageIcon(newImg);
+        }
+        return newIcon;
+    }
+
+    //TODO: improve the getIcon methods.
+    ImageIcon getIcon()
+    {
+        ImageIcon newIcon;
+        if (imagePath == null)
+        {
+            BufferedImage emptyImg = new BufferedImage(30, 40, BufferedImage.TYPE_INT_ARGB);
+            newIcon = new ImageIcon(emptyImg);
+        }
+        else
+        {
+            newIcon = new ImageIcon(this.imagePath.toString());
         }
         return newIcon;
     }

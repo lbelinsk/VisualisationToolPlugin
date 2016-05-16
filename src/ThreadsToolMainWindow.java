@@ -10,6 +10,8 @@ public class ThreadsToolMainWindow extends JFrame
     private JPanel MainPanel;
     private JList<UserSession> SessionsList;
     private JList<UserAction> ActionsList;
+    private JPanel CentralPanel;
+    private JLabel centralImageLabel;
     private DefaultListModel<UserSession> SessionsModel;
     private DefaultListModel<UserAction> ActionsModel;
 
@@ -31,6 +33,8 @@ public class ThreadsToolMainWindow extends JFrame
         ActionsList.setModel(ActionsModel);
         ActionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ActionsList.setCellRenderer(new ListRenderer());
+        ActionsList.addListSelectionListener(this::actionSelectionChanged);
+
 
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/VisualisationToolIcon.png"));
@@ -69,6 +73,23 @@ public class ThreadsToolMainWindow extends JFrame
             {
                 UserSession selectedSession = SessionsList.getSelectedValue();
                 initActionsModel(selectedSession.actions);
+            }
+        }
+    }
+
+    private void actionSelectionChanged(ListSelectionEvent e)
+    {
+        if (!e.getValueIsAdjusting())
+        {
+            if (ActionsList.isSelectionEmpty())
+            {
+                this.centralImageLabel.setIcon(new ImageIcon());
+            }
+            else
+            {
+                UserAction selectedAction = ActionsList.getSelectedValue();
+                ImageIcon icon = selectedAction.getIcon();
+                this.centralImageLabel.setIcon(icon);
             }
         }
     }
