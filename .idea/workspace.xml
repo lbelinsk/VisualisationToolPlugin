@@ -27,11 +27,12 @@
       <file leaf-file-name="ThreadsToolMainWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ThreadsToolMainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="244">
+              <caret line="66" column="27" selection-start-line="66" selection-start-column="27" selection-end-line="66" selection-end-column="27" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="method#initSessionsModel#0;class#ThreadsToolMainWindow#0" expanded="false" />
-                <marker date="1463419873708" expanded="false" signature="1767:1897" placeholder="{...}" />
+                <marker date="1463424589677" expanded="false" signature="1915:2045" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -73,11 +74,11 @@
       <file leaf-file-name="UserAction.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/UserAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="556">
-              <caret line="54" column="35" selection-start-line="53" selection-start-column="35" selection-end-line="54" selection-end-column="35" />
+            <state relative-caret-position="430">
+              <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
               <folding>
                 <element signature="method#toString#0;class#UserAction#0" expanded="false" />
-                <element signature="e#840#882#1" expanded="true" />
+                <element signature="e#871#913#1" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -130,8 +131,8 @@
         <option value="$PROJECT_DIR$/src/VisualisationToolPlugin.java" />
         <option value="$PROJECT_DIR$/src/UserSession.java" />
         <option value="$PROJECT_DIR$/src/ThreadsToolMainWindow.java" />
-        <option value="$PROJECT_DIR$/src/ThreadsToolMainWindow.form" />
         <option value="$PROJECT_DIR$/src/UserAction.java" />
+        <option value="$PROJECT_DIR$/src/ThreadsToolMainWindow.form" />
       </list>
     </option>
   </component>
@@ -211,13 +212,14 @@
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.18997912" />
     <property name="project.structure.side.proportion" value="0.23448277" />
-    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="170" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="777" />
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="301" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="734" />
     <property name="Downloaded.Files.Path.Enabled" value="true" />
     <property name="Repository.Attach.JavaDocs" value="true" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="SearchEverywhereHistoryKey" value="Useractio&#9;PSI&#9;JAVA://UserAction&#10;usersess&#9;PSI&#9;JAVA://UserSession&#10;snapshot &#9;PSI&#9;JAVA://com.intellij.diagnostic.PerformanceWatcher.Snapshot&#10;snapsh&#9;PSI&#9;JAVA://com.google.common.util.concurrent.AbstractService#snapshot&#10;editor&#9;PSI&#9;JAVA://com.intellij.openapi.editor.Editor" />
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -583,7 +585,14 @@
       <option name="project" value="LOCAL" />
       <updated>1463420224369</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Edit background and foreground colors">
+      <created>1463432422655</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1463432422655</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -601,13 +610,13 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282532" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32473624" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3246311" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290398" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23329425" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23681125" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23269013" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32858837" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -674,14 +683,15 @@
     <MESSAGE value="Perform Json parsing only when the tool is activated (instead of start time)" />
     <MESSAGE value="Sessions list bounded to all available sessions" />
     <MESSAGE value="Actions list bounded to selected session + icons" />
-    <option name="LAST_COMMIT_MESSAGE" value="Actions list bounded to selected session + icons" />
+    <MESSAGE value="Edit background and foreground colors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edit background and foreground colors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/ThreadsToolMainWindow.java</url>
-          <line>17</line>
+          <line>19</line>
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
@@ -712,8 +722,9 @@
         <state relative-caret-position="352">
           <caret line="16" column="20" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="20" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#initSessionsModel#0;class#ThreadsToolMainWindow#0" expanded="false" />
-            <marker date="1463419873708" expanded="false" signature="1767:1897" placeholder="{...}" />
+            <marker date="1463424589677" expanded="false" signature="1915:2045" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -1033,16 +1044,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/UserSession.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="31" column="59" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_91/src.zip!/javax/swing/event/ListSelectionListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="505">
@@ -1073,11 +1074,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ThreadsToolMainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="244">
+          <caret line="66" column="27" selection-start-line="66" selection-start-column="27" selection-end-line="66" selection-end-column="27" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#initSessionsModel#0;class#ThreadsToolMainWindow#0" expanded="false" />
-            <marker date="1463419873708" expanded="false" signature="1767:1897" placeholder="{...}" />
+            <marker date="1463424589677" expanded="false" signature="1915:2045" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/UserSession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="31" column="59" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="59" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1095,11 +1107,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UserAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="54" column="35" selection-start-line="53" selection-start-column="35" selection-end-line="54" selection-end-column="35" />
+        <state relative-caret-position="430">
+          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
           <folding>
             <element signature="method#toString#0;class#UserAction#0" expanded="false" />
-            <element signature="e#840#882#1" expanded="true" />
+            <element signature="e#871#913#1" expanded="true" />
           </folding>
         </state>
       </provider>
