@@ -13,7 +13,7 @@ public class UserSession
     {
         //TODO init all params of session from json
         model = jsonFile.model;
-        osName = jsonFile.osName;
+        osName = jsonFile.OSName;
         sessionStartTime = jsonFile.sessionStartTime;
         actions.addAll(jsonFile.actions);
         Collections.sort(actions);

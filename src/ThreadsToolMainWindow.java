@@ -23,8 +23,8 @@ public class ThreadsToolMainWindow extends JFrame
         // set Layout manager
         MainPanel.setLayout(new BorderLayout());
 
-        initRightMenue();
-        initLeftMenue(sessions);
+        initRightMenu();
+        initLeftMenu(sessions);
 
   /*    JScrollBar scrollBar = new JScrollBar(JScrollBar.VERTICAL, 30, 20, 0, 300);
         scrollBar.setUnitIncrement(2);
@@ -47,7 +47,7 @@ public class ThreadsToolMainWindow extends JFrame
         setVisible(true);
     }
 
-    void initRightMenue()
+    void initRightMenu()
     {
         RightMenu = new JTextArea();
         RightMenu.setBackground(Color.WHITE);
@@ -55,7 +55,7 @@ public class ThreadsToolMainWindow extends JFrame
         RightMenu.setForeground(Color.BLACK);
     }
 
-    void initLeftMenue(ArrayList<UserSession> sessions)
+    void initLeftMenu(ArrayList<UserSession> sessions)
     {
         LeftMenu = new JPanel();
         Dimension d = LeftMenu.getPreferredSize();

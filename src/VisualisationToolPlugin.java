@@ -1,7 +1,8 @@
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.jcraft.jsch.Session;
 import org.json.*;
+
+import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -16,10 +17,12 @@ public class VisualisationToolPlugin extends AnAction
     private List<JsonFile> jsonFilesList;
     private ArrayList<UserSession> sessionsList;
 
-    public VisualisationToolPlugin()
+    @Override
+    public void actionPerformed(AnActionEvent event)
     {
         initJsonFilesList();
         initSessionsList();
+        new ThreadsToolMainWindow("Threads Visualisation Tool", sessionsList);
     }
 
     private void initJsonFilesList()
@@ -50,6 +53,13 @@ public class VisualisationToolPlugin extends AnAction
                 }
             }
         }
+        catch (JSONException e)
+        {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    e.getMessage() + "\nThe visualization may be incorrect.",
+                    "Error parsing a Json file",
+                    JOptionPane.ERROR_MESSAGE);
+        }
         catch (IOException x){
             System.err.format("IOException: %s%n", x);
         }
@@ -57,31 +67,53 @@ public class VisualisationToolPlugin extends AnAction
 
     private void initJsonFile(JsonFile newJsonFile, JSONObject jsonObject, Path dir)
     {
-        newJsonFile.model = jsonObject.getString("model");
-        newJsonFile.osName = jsonObject.getString("osname");
-        newJsonFile.sessionStartTime = jsonObject.getLong("session_start_time");
+        //TODO: consider using jsonObject.get functions to throw an exception and inform the user.
+        newJsonFile.model = jsonObject.optString("model");
+        newJsonFile.vendor = jsonObject.optString("vendor");
+        newJsonFile.OSName = jsonObject.optString("osname");
+        newJsonFile.OSVer = jsonObject.optString("osver");
+        newJsonFile.carrier = jsonObject.optString("carrier");
+        newJsonFile.netType = jsonObject.optString("nettype");
+        newJsonFile.infuServer = jsonObject.optString("infuserver");
+        newJsonFile.channel = jsonObject.optString("ch");
+        newJsonFile.appVerName = jsonObject.optString("appvername");
+        newJsonFile.appVerCode = jsonObject.optString("appvercode");
+        newJsonFile.sentTime = jsonObject.optLong("senttime");
 
-        JSONArray arr = jsonObject.getJSONArray("actions");
-        for (int i=0; i<arr.length(); i++)
+        if (jsonObject.has("session_start_time"))
+            newJsonFile.sessionStartTime = jsonObject.getLong("session_start_time");
+        else
+            newJsonFile.sessionStartTime = jsonObject.optLong("time");
+
+        newJsonFile.version = jsonObject.optLong("version");
+        newJsonFile.deviceId = jsonObject.optString("deviceid");
+        newJsonFile.rumAppKey = jsonObject.optString("rumappkey");
+
+        JSONArray arr = jsonObject.optJSONArray("actions");
+        if (arr != null)
         {
-            JSONObject obj = arr.getJSONObject(i);
-            UserAction newAction = new UserAction();
+            for (int i = 0; i < arr.length(); i++)
+            {
+                JSONObject obj = arr.getJSONObject(i);
+                UserAction newAction = new UserAction();
 
-            newAction.name = obj.getString("action_name");
-            newAction.id = obj.getLong("actionid");
-            newAction.duration = obj.getInt("duration");
-            newAction.uaSeq = obj.getInt("ua_seq");
-            newAction.startTime = obj.getLong("starttime");
-            newAction.ctxName = obj.getString("ctx_name");
-            newAction.info = obj.getString("threadsinfo");
+                newAction.name = obj.optString("action_name");
+                newAction.id = obj.optLong("actionid");
+                newAction.duration = obj.optInt("duration");
+                newAction.uaSeq = obj.optInt("ua_seq");
+                newAction.startTime = obj.optLong("starttime");
+                newAction.ctxName = obj.optString("ctx_name");
+                //TODO: parse the threads blob correctly
+                newAction.info = obj.optString("threadsinfo");
 
-            Path imagePath = dir.resolve(String.valueOf(newAction.id) + ".png");
-            if (Files.exists(imagePath))
-                newAction.imagePath = imagePath;
-            else
-                newAction.imagePath = null;
+                Path imagePath = dir.resolve(String.valueOf(newAction.id) + ".png");
+                if (Files.exists(imagePath))
+                    newAction.imagePath = imagePath;
+                else
+                    newAction.imagePath = null;
 
-            newJsonFile.actions.add(newAction);
+                newJsonFile.actions.add(newAction);
+            }
         }
     }
 
@@ -112,12 +144,6 @@ public class VisualisationToolPlugin extends AnAction
     private boolean isSameSession(JsonFile file1, JsonFile file2)
     {
         return (file1.compareTo(file2) == 0);
-    }
-
-    @Override
-    public void actionPerformed(AnActionEvent event)
-    {
-        new ThreadsToolMainWindow("Threads Visualisation Tool", sessionsList);
     }
 }
 
