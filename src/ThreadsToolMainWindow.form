@@ -30,7 +30,7 @@
           <dividerSize value="5"/>
           <foreground color="-16579060"/>
           <orientation value="0"/>
-          <preferredSize width="200" height="47"/>
+          <preferredSize width="300" height="47"/>
           <resizeWeight value="0.5"/>
         </properties>
         <border type="none"/>
@@ -51,7 +51,7 @@
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="2"/>
                   <labelFor value="1729a"/>
-                  <text value="Available sessions"/>
+                  <text value="Available &amp;sessions"/>
                 </properties>
               </component>
               <scrollpane id="1729a">
@@ -83,7 +83,7 @@
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="2"/>
                   <labelFor value="46adf"/>
-                  <text value="Actions per session"/>
+                  <text value="&amp;Actions per session"/>
                 </properties>
               </component>
               <scrollpane id="46adf">
@@ -92,7 +92,12 @@
                   <verticalScrollBarPolicy value="22"/>
                 </properties>
                 <border type="none"/>
-                <children/>
+                <children>
+                  <component id="fe5e6" class="javax.swing.JList" binding="ActionsList">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
               </scrollpane>
             </children>
           </grid>
