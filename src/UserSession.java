@@ -11,7 +11,7 @@ public class UserSession
 
     public UserSession(JsonFile jsonFile)
     {
-        //TODO init all params of session from json
+        //TODO: consider initializing remaining params of session from the json
         model = jsonFile.model;
         osName = jsonFile.OSName;
         sessionStartTime = jsonFile.sessionStartTime;
@@ -20,8 +20,15 @@ public class UserSession
     }
 
     public void mergeWith(List<UserAction> otherActions){
-        //TODO handle duplicate actions
+        //TODO: may there be 2 actions of same session with same uaseq? if yes, consider removing duplicate
         this.actions.addAll(otherActions);
         Collections.sort(actions);
+    }
+
+    @Override
+    public String toString()
+    {
+        //TODO: consider adding session's identifier (for example date/time)
+        return model + " (" + actions.size() + " actions)";
     }
 }
