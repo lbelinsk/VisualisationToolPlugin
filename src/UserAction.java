@@ -4,13 +4,16 @@ import sun.plugin.util.UIUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.nio.file.Path;
 
 class UserAction implements Comparable<UserAction>
 {
     String name;
     long id;
-    Path imagePath;
+    //Path imagePath;
+    //ImageIcon image;
+    Image image;
     int duration;
     int uaSeq;
     long startTime;
@@ -38,40 +41,36 @@ class UserAction implements Comparable<UserAction>
         return title;
     }
 
-    @SuppressWarnings("UndesirableClassUsage")
+    //@SuppressWarnings("UndesirableClassUsage")
     //TODO: consider storing small icons as members for faster rendering. (maybe the delay is from BufferedImage usage)
-    ImageIcon getSmallIcon()
-    {
-        ImageIcon newIcon;
-        if (imagePath == null)
-        {
-            BufferedImage emptyImg = new BufferedImage(30, 40, BufferedImage.TYPE_INT_ARGB);
-            newIcon = new ImageIcon(emptyImg);
-        }
-        else
-        {
-            ImageIcon icon = new ImageIcon(this.imagePath.toString());
-            Image img = icon.getImage();
-            Image newImg = img.getScaledInstance(30, 40, java.awt.Image.SCALE_SMOOTH);
-            newIcon = new ImageIcon(newImg);
-        }
-        return newIcon;
-    }
+//    ImageIcon getSmallIcon()
+//    {
+//        ImageIcon newIcon;
+//        if (image == null)
+//        {
+//            BufferedImage emptyImg = new BufferedImage(30, 40, BufferedImage.TYPE_INT_ARGB);
+//            newIcon = new ImageIcon(emptyImg);
+//        }
+//        else
+//        {
+//            Image newImg = image.getImage().getScaledInstance(30, 40, java.awt.Image.SCALE_SMOOTH);
+//            newIcon = new ImageIcon(newImg);
+//        }
+//        return newIcon;
+//    }
 
     //TODO: improve the getIcon methods.
-    ImageIcon getIcon()
-    {
-        ImageIcon newIcon;
-        if (imagePath == null)
-        {
-            BufferedImage emptyImg = new BufferedImage(30, 40, BufferedImage.TYPE_INT_ARGB);
-            newIcon = new ImageIcon(emptyImg);
-        }
-        else
-        {
-            newIcon = new ImageIcon(this.imagePath.toString());
-        }
-        return newIcon;
-    }
+//    ImageIcon getIcon()
+//    {
+//        if (image == null)
+//        {
+//            BufferedImage emptyImg = new BufferedImage(30, 40, BufferedImage.TYPE_INT_ARGB);
+//            return new ImageIcon(emptyImg);
+//        }
+//        else
+//        {
+//            return image;
+//        }
+//    }
 
 }

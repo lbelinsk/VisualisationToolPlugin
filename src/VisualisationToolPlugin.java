@@ -1,8 +1,13 @@
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.structuralsearch.plugin.ui.UIUtil;
 import org.json.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -108,9 +113,17 @@ public class VisualisationToolPlugin extends AnAction
 
                 Path imagePath = dir.resolve(String.valueOf(newAction.id) + ".png");
                 if (Files.exists(imagePath))
-                    newAction.imagePath = imagePath;
+                    try
+                    {
+                        Image img = ImageIO.read(new File(imagePath.toString()));
+                        newAction.image = img.getScaledInstance(180,320, Image.SCALE_SMOOTH);
+                    } catch (IOException e)
+                    {
+                        System.err.format("IOException: %s%n", e);
+                    }
                 else
-                    newAction.imagePath = null;
+                    //TODO: assign sample empty image
+                    newAction.image = com.intellij.util.ui.UIUtil.createImage(180,320,Image.SCALE_SMOOTH);
 
                 newJsonFile.actions.add(newAction);
             }

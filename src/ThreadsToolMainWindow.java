@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.util.*;
@@ -10,10 +11,7 @@ public class ThreadsToolMainWindow extends JFrame
     private JPanel MainPanel;
     private JList<UserSession> SessionsList;
     private JList<UserAction> ActionsList;
-    private JPanel CentralPanel;
     private JLabel centralImageLabel;
-    private DefaultListModel<UserSession> SessionsModel;
-    private DefaultListModel<UserAction> ActionsModel;
 
     ThreadsToolMainWindow(String title, ArrayList<UserSession> userSessions)
     {
@@ -21,20 +19,18 @@ public class ThreadsToolMainWindow extends JFrame
         this.sessions = userSessions;
         super.frameInit();
 
-        SessionsModel = new DefaultListModel<>();
-        initSessionsModel();
-        SessionsList.setModel(SessionsModel);
+        DefaultListModel<UserSession> sessionsModel = new DefaultListModel<>();
+        initSessionsModel(sessionsModel, this.sessions);
+        SessionsList.setModel(sessionsModel);
         SessionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         SessionsList.setCellRenderer(new ListRenderer());
         SessionsList.addListSelectionListener(this::sessionSelectionChanged);
 
-
-        ActionsModel = new DefaultListModel<>();
-        ActionsList.setModel(ActionsModel);
+        DefaultListModel<UserAction> actionsModel = new DefaultListModel<>();
+        ActionsList.setModel(actionsModel);
         ActionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ActionsList.setCellRenderer(new ListRenderer());
         ActionsList.addListSelectionListener(this::actionSelectionChanged);
-
 
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/VisualisationToolIcon.png"));
@@ -46,34 +42,32 @@ public class ThreadsToolMainWindow extends JFrame
         setVisible(true);
     }
 
-    private void initSessionsModel()
+    private void initActionsModel(DefaultListModel newModel, List<UserAction> actions)
     {
-        for (UserSession session :
-                this.sessions)
-        {
-            SessionsModel.addElement(session);
-        }
+        actions.forEach(newModel::addElement);
     }
 
-    private void initActionsModel(List<UserAction> actions)
+    private void initSessionsModel(DefaultListModel newModel, List<UserSession> sessions)
     {
-        for (UserAction action :
-                actions)
-        {
-            ActionsModel.addElement(action);
-        }
+        sessions.forEach(newModel::addElement);
     }
 
     private void sessionSelectionChanged(ListSelectionEvent e)
     {
         if (!e.getValueIsAdjusting())
         {
-            ActionsModel.clear();
+            DefaultListModel<UserAction> model = (DefaultListModel<UserAction>)ActionsList.getModel();
+            model.removeAllElements();
+            ActionsList.updateUI();
             if (!SessionsList.isSelectionEmpty())
             {
                 UserSession selectedSession = SessionsList.getSelectedValue();
-                initActionsModel(selectedSession.actions);
+                DefaultListModel<UserAction> newActionsModel = new DefaultListModel<>();
+                initActionsModel(newActionsModel, selectedSession.actions);
+                ActionsList.setModel(newActionsModel);
             }
+        if (ActionsList.getModel().getSize() > 0)
+            ActionsList.setSelectedIndex(0);
         }
     }
 
@@ -88,10 +82,25 @@ public class ThreadsToolMainWindow extends JFrame
             else
             {
                 UserAction selectedAction = ActionsList.getSelectedValue();
-                ImageIcon icon = selectedAction.getIcon();
-                this.centralImageLabel.setIcon(icon);
+                updateCentralWindow(selectedAction);
             }
         }
+    }
+
+    private void updateCentralWindow(UserAction selectedAction)
+    {
+        //setSpecificSize(centralImageLabel, new Dimension(180,320));
+        centralImageLabel.setIcon(new ImageIcon(selectedAction.image));
+        Border in = BorderFactory.createRaisedBevelBorder();
+        Border out = BorderFactory.createEmptyBorder(10,10,10,10);
+        centralImageLabel.setBorder(BorderFactory.createCompoundBorder(out,in));
+    }
+
+    private void setSpecificSize(JComponent component, Dimension dimension)
+    {
+        component.setMinimumSize(dimension);
+        component.setPreferredSize(dimension);
+        component.setMaximumSize(dimension);
     }
 }
 
@@ -107,13 +116,13 @@ class ListRenderer extends DefaultListCellRenderer {
         if (value instanceof UserSession)
         {
             UserSession session = (UserSession) value;
-            setText((index + 1) + ". " + session.toString());
+            setText(" " + (index + 1) + ". " + session.toString());
         }
         else if (value instanceof UserAction)
         {
             UserAction action = (UserAction) value;
-            setText((index + 1) + ". " + action.toString());
-            setIcon(action.getSmallIcon());
+            setText(" " + (index + 1) + ". " + action.toString());
+            //setIcon(action.getSmallIcon());
         }
         return this;
     }
