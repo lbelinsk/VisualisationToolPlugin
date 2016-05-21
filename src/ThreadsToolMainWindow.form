@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ThreadsToolMainWindow">
   <grid id="27dc6" binding="MainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="800" height="600"/>
+      <xy x="20" y="20" width="1200" height="600"/>
     </constraints>
     <properties>
       <alignmentX value="1.0"/>
@@ -12,9 +12,9 @@
       <font name="Segoe UI" size="16" style="0"/>
       <foreground color="-11710638"/>
       <inheritsPopupMenu value="false"/>
-      <minimumSize width="800" height="600"/>
+      <minimumSize width="1000" height="600"/>
       <opaque value="false"/>
-      <preferredSize width="1200" height="800"/>
+      <preferredSize width="1500" height="800"/>
     </properties>
     <border type="etched" title-justification="2" title-position="1">
       <font name="Arial Black" size="18" style="1"/>
@@ -30,8 +30,8 @@
           <dividerSize value="5"/>
           <foreground color="-16579060"/>
           <orientation value="0"/>
-          <preferredSize width="300" height="47"/>
-          <resizeWeight value="0.5"/>
+          <preferredSize width="400" height="47"/>
+          <resizeWeight value="0.25"/>
         </properties>
         <border type="none"/>
         <children>
@@ -123,33 +123,270 @@
           </grid>
         </children>
       </splitpane>
-      <grid id="b2bbe" layout-manager="GridLayoutManager" row-count="2" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
+      <grid id="b2bbe" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="Center"/>
-        <properties/>
+        <properties>
+          <minimumSize width="1200" height="165"/>
+          <preferredSize width="1200" height="165"/>
+        </properties>
         <border type="none"/>
         <children>
-          <vspacer id="fb968">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
-          <component id="5acc4" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="da0a1" class="javax.swing.JLabel" binding="centralImageLabel">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
+          <grid id="579fb" binding="CentralNorthPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="North"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="726be" class="javax.swing.JLabel" binding="centralImageLabel">
+                <constraints border-constraint="East"/>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+              <grid id="b7a0a" binding="LabelsPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints border-constraint="Center"/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="ac422" binding="SessionsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                    <constraints border-constraint="West"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <grid id="bb249" binding="SessionTitlesPanel" layout-manager="FormLayout">
+                        <rowspec value="center:d:noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <colspec value="fill:d:noGrow"/>
+                        <constraints/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="b140" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Vendor: "/>
+                            </properties>
+                          </component>
+                          <component id="fd3fb" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="OS: "/>
+                            </properties>
+                          </component>
+                          <component id="d0697" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Network: "/>
+                            </properties>
+                          </component>
+                          <component id="6f3a2" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Carrier: "/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <grid id="d8ed2" binding="SessionValuesPanel" layout-manager="FormLayout">
+                        <rowspec value="center:d:noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <colspec value="fill:d:noGrow"/>
+                        <constraints/>
+                        <properties>
+                          <font name="Segoe UI" size="18"/>
+                        </properties>
+                        <border type="none"/>
+                        <children>
+                          <component id="6ff88" class="javax.swing.JLabel" binding="VendorLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Unknown"/>
+                            </properties>
+                          </component>
+                          <component id="40cf7" class="javax.swing.JLabel" binding="OSLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Unknown"/>
+                            </properties>
+                          </component>
+                          <component id="1934e" class="javax.swing.JLabel" binding="NetworkLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Unknown"/>
+                            </properties>
+                          </component>
+                          <component id="cc6db" class="javax.swing.JLabel" binding="CarrierLabel">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Unknown"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                  <grid id="9e39f" binding="ActionsPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                    <constraints border-constraint="Center"/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <grid id="c2eb7" binding="ActionTitlesPanel" layout-manager="FormLayout">
+                        <rowspec value="center:d:noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <colspec value="fill:d:noGrow"/>
+                        <constraints/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="411a3" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Context name: "/>
+                            </properties>
+                          </component>
+                          <component id="fe15d" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Action name: "/>
+                            </properties>
+                          </component>
+                          <component id="ac1d0" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Seq. num: "/>
+                            </properties>
+                          </component>
+                          <component id="1481e" class="javax.swing.JLabel">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Duration: "/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                      <grid id="3c4e7" binding="ActionValuesPanel" layout-manager="FormLayout">
+                        <rowspec value="center:d:noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <rowspec value="top:4dlu:noGrow"/>
+                        <rowspec value="center:max(d;4px):noGrow"/>
+                        <colspec value="fill:d:noGrow"/>
+                        <constraints/>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="d564f" class="javax.swing.JLabel" binding="ContextNameLabel">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Unknown"/>
+                            </properties>
+                          </component>
+                          <component id="f29b6" class="javax.swing.JLabel" binding="ActionNameLabel">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Unknown"/>
+                            </properties>
+                          </component>
+                          <component id="bfa94" class="javax.swing.JLabel" binding="SeqNumLabel">
+                            <constraints>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Unknown"/>
+                            </properties>
+                          </component>
+                          <component id="4cd7" class="javax.swing.JLabel" binding="DurationLabel">
+                            <constraints>
+                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <forms/>
+                            </constraints>
+                            <properties>
+                              <font name="Segoe UI" size="18"/>
+                              <text value="Unknown"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+            </children>
+          </grid>
         </children>
       </grid>
     </children>

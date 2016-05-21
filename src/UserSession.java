@@ -5,7 +5,11 @@ import java.util.List;
 public class UserSession
 {
     String model;
-    String osName;
+    String OSName;
+    String vendor;
+    String OSVer;
+    String netType;
+    String carrier;
     long sessionStartTime;
     List<UserAction> actions = new ArrayList<>();
 
@@ -13,7 +17,11 @@ public class UserSession
     {
         //TODO: consider initializing remaining params of session from the json
         model = jsonFile.model;
-        osName = jsonFile.OSName;
+        OSName = jsonFile.OSName;
+        vendor = jsonFile.vendor;
+        OSVer = jsonFile.OSVer;
+        carrier = jsonFile.carrier;
+        netType = jsonFile.netType;
         sessionStartTime = jsonFile.sessionStartTime;
         actions.addAll(jsonFile.actions);
         Collections.sort(actions);

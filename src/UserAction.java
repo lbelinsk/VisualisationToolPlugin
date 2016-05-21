@@ -34,43 +34,10 @@ class UserAction implements Comparable<UserAction>
     {
         String title;
         if (ctxName.isEmpty() && name.isEmpty())
-            title = "title unknown";
+            title = "unknown (ua_seq = " + this.uaSeq + ")";
         else
             title = ctxName + ": " + name;
 
         return title;
     }
-
-    //@SuppressWarnings("UndesirableClassUsage")
-    //TODO: consider storing small icons as members for faster rendering. (maybe the delay is from BufferedImage usage)
-//    ImageIcon getSmallIcon()
-//    {
-//        ImageIcon newIcon;
-//        if (image == null)
-//        {
-//            BufferedImage emptyImg = new BufferedImage(30, 40, BufferedImage.TYPE_INT_ARGB);
-//            newIcon = new ImageIcon(emptyImg);
-//        }
-//        else
-//        {
-//            Image newImg = image.getImage().getScaledInstance(30, 40, java.awt.Image.SCALE_SMOOTH);
-//            newIcon = new ImageIcon(newImg);
-//        }
-//        return newIcon;
-//    }
-
-    //TODO: improve the getIcon methods.
-//    ImageIcon getIcon()
-//    {
-//        if (image == null)
-//        {
-//            BufferedImage emptyImg = new BufferedImage(30, 40, BufferedImage.TYPE_INT_ARGB);
-//            return new ImageIcon(emptyImg);
-//        }
-//        else
-//        {
-//            return image;
-//        }
-//    }
-
 }

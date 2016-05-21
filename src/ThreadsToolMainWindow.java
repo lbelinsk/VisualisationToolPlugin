@@ -11,7 +11,23 @@ public class ThreadsToolMainWindow extends JFrame
     private JPanel MainPanel;
     private JList<UserSession> SessionsList;
     private JList<UserAction> ActionsList;
+    private JPanel CentralNorthPanel;
     private JLabel centralImageLabel;
+    private JPanel SessionsPanel;
+    private JPanel LabelsPanel;
+    private JLabel VendorLabel;
+    private JLabel OSLabel;
+    private JLabel NetworkLabel;
+    private JLabel CarrierLabel;
+    private JPanel SessionValuesPanel;
+    private JPanel SessionTitlesPanel;
+    private JPanel ActionsPanel;
+    private JPanel ActionTitlesPanel;
+    private JPanel ActionValuesPanel;
+    private JLabel ContextNameLabel;
+    private JLabel ActionNameLabel;
+    private JLabel SeqNumLabel;
+    private JLabel DurationLabel;
 
     ThreadsToolMainWindow(String title, ArrayList<UserSession> userSessions)
     {
@@ -33,12 +49,17 @@ public class ThreadsToolMainWindow extends JFrame
         ActionsList.addListSelectionListener(this::actionSelectionChanged);
 
 
+        if (SessionsList.getModel().getSize() > 0)
+            SessionsList.setSelectedIndex(0);
+
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/VisualisationToolIcon.png"));
         setIconImage(icon.getImage());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(MainPanel);
         pack();
         setLocationRelativeTo(null);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setMinimumSize(new Dimension(1400,800));
         setVisible(true);
     }
 
@@ -77,30 +98,61 @@ public class ThreadsToolMainWindow extends JFrame
         {
             if (ActionsList.isSelectionEmpty())
             {
-                this.centralImageLabel.setIcon(new ImageIcon());
+                updateCentralWindow(null, null);
             }
             else
             {
                 UserAction selectedAction = ActionsList.getSelectedValue();
-                updateCentralWindow(selectedAction);
+                UserSession selectedSession = SessionsList.getSelectedValue();
+                updateCentralWindow(selectedAction, selectedSession);
             }
         }
     }
 
-    private void updateCentralWindow(UserAction selectedAction)
+    private void updateCentralWindow(UserAction selectedAction, UserSession selectedSession)
     {
-        //setSpecificSize(centralImageLabel, new Dimension(180,320));
+        if (selectedAction == null || selectedSession == null){
+            return;
+        }
+        updateUpperPart(selectedAction, selectedSession);
+        updateLowerPart();
+        
+    }
+
+    private void updateUpperPart(UserAction selectedAction, UserSession selectedSession)
+    {
         centralImageLabel.setIcon(new ImageIcon(selectedAction.image));
         Border in = BorderFactory.createRaisedBevelBorder();
         Border out = BorderFactory.createEmptyBorder(10,10,10,10);
         centralImageLabel.setBorder(BorderFactory.createCompoundBorder(out,in));
+
+        Border out2 = BorderFactory.createEmptyBorder(10,10,10,0);
+        LabelsPanel.setBorder(BorderFactory.createCompoundBorder(out2, in));
+        SessionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        SessionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,20));
+        ActionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        ActionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+
+        setLabel(VendorLabel, selectedSession.vendor + " " + selectedSession.model);
+        setLabel(OSLabel, selectedSession.OSName + " " + selectedSession.OSVer);
+        setLabel(NetworkLabel, selectedSession.netType);
+        setLabel(CarrierLabel, selectedSession.carrier);
+
+        setLabel(ContextNameLabel, selectedAction.ctxName);
+        setLabel(ActionNameLabel, selectedAction.name);
+        setLabel(SeqNumLabel, String.valueOf(selectedAction.uaSeq));
+        setLabel(DurationLabel, String.valueOf(selectedAction.duration));
     }
 
-    private void setSpecificSize(JComponent component, Dimension dimension)
+    private void setLabel(JLabel Label, String text)
     {
-        component.setMinimumSize(dimension);
-        component.setPreferredSize(dimension);
-        component.setMaximumSize(dimension);
+        if(text.compareTo("")!= 0)
+            Label.setText(text);
+    }
+
+    private void updateLowerPart()
+    {
     }
 }
 

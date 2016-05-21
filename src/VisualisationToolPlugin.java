@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,13 +34,29 @@ public class VisualisationToolPlugin extends AnAction
     private void initJsonFilesList()
     {
         this.jsonFilesList = new ArrayList<>();
+        JFileChooser dirChooser;
         String jsonString;
+        Path dir;
         //TODO: dynamically find a relevant path. Alert if no jsons found
-        Path dir = Paths.get(System.getProperty("user.home"),
+        dir = Paths.get(System.getProperty("user.home"),
                 "IdeaProjects",
                 "VisualisationToolPlugin",
                 "temp",
-                "com.kayak.android");
+                "com.hp.advantage");
+
+//        dirChooser = new JFileChooser();
+//        dirChooser.setCurrentDirectory(new java.io.File("."));
+//        dirChooser.setDialogTitle("Choose directory with Json files");
+//        dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//        dirChooser.setAcceptAllFileFilterUsed(false);
+//        if (dirChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+//            dir = Paths.get(dirChooser.getSelectedFile().getAbsolutePath());
+//            //dirChooser.getCurrentDirectory())
+//        }
+//        else {
+//            System.out.println("No Selection ");
+//            return;
+//        }
 
         try (DirectoryStream<Path> stream =
              Files.newDirectoryStream(dir, "*.json")) {
@@ -112,19 +129,23 @@ public class VisualisationToolPlugin extends AnAction
                 newAction.info = obj.optString("threadsinfo");
 
                 Path imagePath = dir.resolve(String.valueOf(newAction.id) + ".png");
-                if (Files.exists(imagePath))
-                    try
+                Image img;
+                try
+                {
+                    if (Files.exists(imagePath))
+                        img = ImageIO.read(new File(imagePath.toString()));
+                    else
                     {
-                        Image img = ImageIO.read(new File(imagePath.toString()));
-                        newAction.image = img.getScaledInstance(180,320, Image.SCALE_SMOOTH);
-                    } catch (IOException e)
-                    {
-                        System.err.format("IOException: %s%n", e);
+                        ImageIcon icon = new ImageIcon(getClass().getResource("/icons/noImage.jpg"));
+                        img = icon.getImage();
                     }
-                else
-                    //TODO: assign sample empty image
-                    newAction.image = com.intellij.util.ui.UIUtil.createImage(180,320,Image.SCALE_SMOOTH);
 
+                    newAction.image = img.getScaledInstance(180, 320, Image.SCALE_SMOOTH);
+                }
+                catch (IOException e)
+                {
+                    System.err.format("IOException: %s%n", e);
+                }
                 newJsonFile.actions.add(newAction);
             }
         }
