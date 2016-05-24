@@ -1,15 +1,14 @@
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.structuralsearch.plugin.ui.UIUtil;
+import org.jetbrains.annotations.Nullable;
 import org.json.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,46 +16,32 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.prefs.Preferences;
 
 public class VisualisationToolPlugin extends AnAction
 {
+    private static final String LAST_USED_FOLDER = "last_used_folder";
     private List<JsonFile> jsonFilesList;
     private ArrayList<UserSession> sessionsList;
+    private Preferences prefs = Preferences.userRoot().node(getClass().getName());
 
     @Override
     public void actionPerformed(AnActionEvent event)
     {
-        initJsonFilesList();
+        if (!initJsonFilesList())
+            return;
         initSessionsList();
         new ThreadsToolMainWindow("Threads Visualisation Tool", sessionsList);
     }
 
-    private void initJsonFilesList()
+    private Boolean initJsonFilesList()
     {
         this.jsonFilesList = new ArrayList<>();
-        JFileChooser dirChooser;
         String jsonString;
-        Path dir;
-        //TODO: dynamically find a relevant path. Alert if no jsons found
-        dir = Paths.get(System.getProperty("user.home"),
-                "IdeaProjects",
-                "VisualisationToolPlugin",
-                "temp",
-                "com.hp.advantage");
 
-//        dirChooser = new JFileChooser();
-//        dirChooser.setCurrentDirectory(new java.io.File("."));
-//        dirChooser.setDialogTitle("Choose directory with Json files");
-//        dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//        dirChooser.setAcceptAllFileFilterUsed(false);
-//        if (dirChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-//            dir = Paths.get(dirChooser.getSelectedFile().getAbsolutePath());
-//            //dirChooser.getCurrentDirectory())
-//        }
-//        else {
-//            System.out.println("No Selection ");
-//            return;
-//        }
+        Path dir = chooseDir();
+        if (dir == null)
+            return false;
 
         try (DirectoryStream<Path> stream =
              Files.newDirectoryStream(dir, "*.json")) {
@@ -81,10 +66,69 @@ public class VisualisationToolPlugin extends AnAction
                     e.getMessage() + "\nThe visualization may be incorrect.",
                     "Error parsing a Json file",
                     JOptionPane.ERROR_MESSAGE);
+            return false;
         }
         catch (IOException x){
             System.err.format("IOException: %s%n", x);
+            return false;
         }
+        return true;
+    }
+
+    @Nullable
+    private Path chooseDir()
+    {
+        File defaultFolder = new File(Paths.get(System.getProperty("user.home")).toString());
+        JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER, defaultFolder.getAbsolutePath()));
+        chooser.setDialogTitle("Choose directory of json files");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setApproveButtonText("OK");
+
+        File choice = null;
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+        {
+            if (chooser.getSelectedFile() != null)
+            {
+                if (chooser.getSelectedFile().exists())
+                {
+                    choice = chooser.getSelectedFile();
+                }
+                else
+                {
+                    choice = new File(chooser.getSelectedFile().getParent());
+                }
+            }
+        }
+        else
+        {
+            return null;
+        }
+
+        if (choice == null || noJsonFiles(choice))
+        {
+            JOptionPane.showMessageDialog(null,"No valid directory was chosen.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return null;
+        }
+        else
+        {
+            prefs.put(LAST_USED_FOLDER, choice.getParent());
+            return Paths.get(choice.getAbsolutePath());
+        }
+    }
+
+    private boolean noJsonFiles(File choice)
+    {
+        Boolean res = true;
+        if (choice.exists() && choice.isDirectory())
+        {
+            File[] jsonFilesInside = choice.listFiles((dir, name) -> {
+                return name.toLowerCase().endsWith(".json");
+            });
+
+            if (jsonFilesInside.length > 0)
+                res = false;
+        }
+        return res;
     }
 
     private void initJsonFile(JsonFile newJsonFile, JSONObject jsonObject, Path dir)
