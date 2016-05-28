@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -18,12 +17,17 @@ import java.util.List;
 import java.util.Collections;
 import java.util.prefs.Preferences;
 
+import static org.apache.commons.codec.binary.Base64.decodeBase64;
+
 public class VisualisationToolPlugin extends AnAction
 {
     private static final String LAST_USED_FOLDER = "last_used_folder";
     private List<JsonFile> jsonFilesList;
     private ArrayList<UserSession> sessionsList;
     private Preferences prefs = Preferences.userRoot().node(getClass().getName());
+    private Image defaultImage = new ImageIcon(getClass().getResource("/icons/noImage.jpg"))
+                                    .getImage()
+                                    .getScaledInstance(180, 320, Image.SCALE_SMOOTH);
 
     @Override
     public void actionPerformed(AnActionEvent event)
@@ -157,7 +161,6 @@ public class VisualisationToolPlugin extends AnAction
 
         JSONArray arr = jsonObject.optJSONArray("actions");
         if (arr != null)
-        {
             for (int i = 0; i < arr.length(); i++)
             {
                 JSONObject obj = arr.getJSONObject(i);
@@ -169,30 +172,25 @@ public class VisualisationToolPlugin extends AnAction
                 newAction.uaSeq = obj.optInt("ua_seq");
                 newAction.startTime = obj.optLong("starttime");
                 newAction.ctxName = obj.optString("ctx_name");
-                //TODO: parse the threads blob correctly
-                newAction.info = obj.optString("threadsinfo");
+                newAction.setThreadsBlob(obj.getString("threadsinfo"));
 
+                newAction.image = defaultImage;
                 Path imagePath = dir.resolve(String.valueOf(newAction.id) + ".png");
                 Image img;
                 try
                 {
                     if (Files.exists(imagePath))
-                        img = ImageIO.read(new File(imagePath.toString()));
-                    else
                     {
-                        ImageIcon icon = new ImageIcon(getClass().getResource("/icons/noImage.jpg"));
-                        img = icon.getImage();
+                        img = ImageIO.read(new File(imagePath.toString()));
+                        newAction.image = img.getScaledInstance(180, 320, Image.SCALE_SMOOTH);
                     }
-
-                    newAction.image = img.getScaledInstance(180, 320, Image.SCALE_SMOOTH);
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     System.err.format("IOException: %s%n", e);
                 }
+
                 newJsonFile.actions.add(newAction);
             }
-        }
     }
 
     private void initSessionsList()

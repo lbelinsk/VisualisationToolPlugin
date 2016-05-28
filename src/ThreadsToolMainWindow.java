@@ -28,6 +28,9 @@ public class ThreadsToolMainWindow extends JFrame
     private JLabel ActionNameLabel;
     private JLabel SeqNumLabel;
     private JLabel DurationLabel;
+    private JList ThreadsList;
+    private JScrollPane ThreadsListScrollPanel;
+    private JPanel ThreadsPanel;
 
     ThreadsToolMainWindow(String title, ArrayList<UserSession> userSessions)
     {
@@ -48,6 +51,10 @@ public class ThreadsToolMainWindow extends JFrame
         ActionsList.setCellRenderer(new ListRenderer());
         ActionsList.addListSelectionListener(this::actionSelectionChanged);
 
+        DefaultListModel<Thread> threadsModel = new DefaultListModel<>();
+        ThreadsList.setModel(threadsModel);
+        ThreadsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ThreadsList.setCellRenderer(new ListRenderer());
 
         if (SessionsList.getModel().getSize() > 0)
             SessionsList.setSelectedIndex(0);
@@ -71,6 +78,11 @@ public class ThreadsToolMainWindow extends JFrame
     private void initSessionsModel(DefaultListModel newModel, List<UserSession> sessions)
     {
         sessions.forEach(newModel::addElement);
+    }
+
+    private void initThreadsModel(DefaultListModel newModel, List<Thread> threads)
+    {
+        threads.forEach(newModel::addElement);
     }
 
     private void sessionSelectionChanged(ListSelectionEvent e)
@@ -115,16 +127,17 @@ public class ThreadsToolMainWindow extends JFrame
             return;
         }
         updateUpperPart(selectedAction, selectedSession);
-        updateLowerPart();
-        
+        updateGraphPart(selectedAction);
     }
 
     private void updateUpperPart(UserAction selectedAction, UserSession selectedSession)
     {
+        //TODO: consider setting the borders once in constructor
         centralImageLabel.setIcon(new ImageIcon(selectedAction.image));
         Border in = BorderFactory.createRaisedBevelBorder();
         Border out = BorderFactory.createEmptyBorder(10,10,10,10);
         centralImageLabel.setBorder(BorderFactory.createCompoundBorder(out,in));
+        ThreadsPanel.setBorder(BorderFactory.createCompoundBorder(out,in));
 
         Border out2 = BorderFactory.createEmptyBorder(10,10,10,0);
         LabelsPanel.setBorder(BorderFactory.createCompoundBorder(out2, in));
@@ -132,7 +145,6 @@ public class ThreadsToolMainWindow extends JFrame
         SessionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,20));
         ActionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         ActionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-
 
         setLabel(VendorLabel, selectedSession.vendor + " " + selectedSession.model);
         setLabel(OSLabel, selectedSession.OSName + " " + selectedSession.OSVer);
@@ -149,10 +161,15 @@ public class ThreadsToolMainWindow extends JFrame
     {
         if(text.compareTo("")!= 0)
             Label.setText(text);
+        else
+            Label.setText("Unknown");
     }
 
-    private void updateLowerPart()
+    private void updateGraphPart(UserAction selectedAction)
     {
+        DefaultListModel<Thread> threadModel = new DefaultListModel<>();
+        initThreadsModel(threadModel, selectedAction.threads);
+        ThreadsList.setModel(threadModel);
     }
 }
 

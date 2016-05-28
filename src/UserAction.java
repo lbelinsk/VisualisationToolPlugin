@@ -6,19 +6,20 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Path;
+import java.util.*;
+import java.util.List;
 
 class UserAction implements Comparable<UserAction>
 {
     String name;
     long id;
-    //Path imagePath;
-    //ImageIcon image;
     Image image;
     int duration;
     int uaSeq;
     long startTime;
     String ctxName;
-    Object info;
+    List<Thread> threads;
+
 
     @Override
     public int compareTo(@NotNull UserAction otherAction) {
@@ -40,4 +41,11 @@ class UserAction implements Comparable<UserAction>
 
         return title;
     }
+
+    void setThreadsBlob(String threadsBlob)
+    {
+        threads = ThreadsBlobParser.getInstance().parseBlob(id, threadsBlob);
+        Collections.sort(threads);
+    }
 }
+
