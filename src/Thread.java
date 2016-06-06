@@ -12,7 +12,9 @@ enum ThreadActionType {
 public class Thread implements Comparable<Thread>
 {
     private int threadId;
-    private List<ThreadAction> threadActions = new ArrayList<>();
+    int earliestStart = Integer.MAX_VALUE;
+    int latestEnd = Integer.MIN_VALUE;
+    List<ThreadAction> threadActions = new ArrayList<>();
     public Thread(int threadId)
     {
         this.threadId = threadId;
@@ -21,6 +23,10 @@ public class Thread implements Comparable<Thread>
     void addAction(ThreadAction newThreadAction)
     {
         threadActions.add(newThreadAction);
+        if (newThreadAction.startTime < earliestStart)
+            earliestStart = newThreadAction.startTime;
+        if (newThreadAction.startTime + newThreadAction.duration > latestEnd)
+            latestEnd = newThreadAction.startTime + newThreadAction.duration;
     }
 
     @Override
@@ -42,9 +48,9 @@ class ThreadAction
     private long userActionId;
     private int threadId;
     private String name;
-    private int startTime;
-    private int duration;
-    private String callingMethod;
+    int startTime;
+    int duration;
+    String callingMethod;
 
     // Relevant for NET threadActionType only
     private String Url;

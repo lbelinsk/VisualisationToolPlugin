@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a315a0b3-17ad-4b9b-973f-3c6a845e5c52" name="Default" comment="Added ChartPanel">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ChartPanel.java" />
+    <list default="true" id="a315a0b3-17ad-4b9b-973f-3c6a845e5c52" name="Default" comment="Initial visualisation is running">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ThreadsToolMainWindow.form" afterPath="$PROJECT_DIR$/src/ThreadsToolMainWindow.form" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ThreadsToolMainWindow.java" afterPath="$PROJECT_DIR$/src/ThreadsToolMainWindow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ChartPanel.java" afterPath="$PROJECT_DIR$/src/ChartPanel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Thread.java" afterPath="$PROJECT_DIR$/src/Thread.java" />
     </list>
     <ignored path="VisualisationToolPlugin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,19 +26,49 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="ChartPanel.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ChartPanel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ChartPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="210" column="24" selection-start-line="210" selection-start-column="24" selection-end-line="210" selection-end-column="24" />
+            <state relative-caret-position="182">
+              <caret line="207" column="38" selection-start-line="207" selection-start-column="38" selection-end-line="207" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="class#1212:1395" expanded="false" />
-                <element signature="class#1434:1617" expanded="false" />
-                <element signature="class#1655:1850" expanded="false" />
+                <element signature="method#ChartPanel#0;class#ChartPanel#0" expanded="false" />
+                <element signature="class#1180:1363" expanded="false" />
+                <element signature="class#1402:1585" expanded="false" />
+                <element signature="class#1623:1818" expanded="false" />
+                <element signature="class#1855:2105" expanded="false" />
+                <element signature="method#initBorders#0;class#ChartPanel#0" expanded="false" />
                 <element signature="method#resizeSquare#0;class#ChartPanel#0" expanded="false" />
-                <element signature="e#4200#4201#0" expanded="true" />
-                <element signature="e#4232#4233#0" expanded="true" />
+                <element signature="method#moveSquare#0;class#ChartPanel#0" expanded="false" />
+                <element signature="e#5204#5205#0" expanded="true" />
+                <element signature="e#5236#5237#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Thread.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Thread.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
+              <folding>
+                <element signature="method#ThreadAction#0;class#ThreadAction#0" expanded="false" />
+                <element signature="method#ThreadAction#1;class#ThreadAction#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThreadsBlobParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ThreadsBlobParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="356">
+              <caret line="41" column="26" selection-start-line="41" selection-start-column="26" selection-end-line="41" selection-end-column="26" />
+              <folding>
+                <element signature="method#getInfo#0;class#ThreadsBlobParser#0" expanded="false" />
+                <element signature="method#initThreadAction#0;class#ThreadsBlobParser#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -62,16 +91,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1342">
               <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#4926#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#2524#2525#0" expanded="false" />
-                <element signature="e#2566#2567#0" expanded="false" />
-                <element signature="e#2604#2605#0" expanded="false" />
-                <element signature="e#2640#2641#0" expanded="false" />
-                <element signature="e#2793#2794#0" expanded="false" />
-                <element signature="e#2836#2837#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -79,8 +99,8 @@
       <file leaf-file-name="VisualisationToolPlugin.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/VisualisationToolPlugin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="37" column="33" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="33" />
+            <state relative-caret-position="330">
+              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
               <folding>
                 <element signature="method#initJsonFilesList#0;class#VisualisationToolPlugin#0" expanded="false" />
                 <element signature="method#chooseDir#0;class#VisualisationToolPlugin#0" expanded="false" />
@@ -92,7 +112,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThreadsToolMainWindow.form" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ActionUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../intellij-community/platform/platform-api/src/com/intellij/openapi/actionSystem/ex/ActionUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="567">
+              <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThreadsToolMainWindow.form" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ThreadsToolMainWindow.form">
           <provider selected="true" editor-type-id="ui-designer">
             <state />
@@ -102,14 +132,13 @@
       <file leaf-file-name="ThreadsToolMainWindow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ThreadsToolMainWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+            <state relative-caret-position="501">
+              <caret line="175" column="22" selection-start-line="175" selection-start-column="22" selection-end-line="175" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#initActionsModel#0;class#ThreadsToolMainWindow#0" expanded="false" />
                 <element signature="method#initSessionsModel#0;class#ThreadsToolMainWindow#0" expanded="false" />
                 <element signature="method#initThreadsModel#0;class#ThreadsToolMainWindow#0" expanded="false" />
-                <element signature="method#updateCentralWindow#0;class#ThreadsToolMainWindow#0" expanded="false" />
                 <element signature="method#updateUpperPart#0;class#ThreadsToolMainWindow#0" expanded="false" />
                 <element signature="method#setLabel#0;class#ThreadsToolMainWindow#0" expanded="false" />
                 <element signature="class#ListRenderer#0" expanded="false" />
@@ -165,11 +194,11 @@
         <option value="$PROJECT_DIR$/src/JsonFile.java" />
         <option value="$PROJECT_DIR$/src/UserSession.java" />
         <option value="$PROJECT_DIR$/src/VisualisationToolPlugin.java" />
-        <option value="$PROJECT_DIR$/src/Thread.java" />
         <option value="$PROJECT_DIR$/src/ThreadsBlobParser.java" />
         <option value="$PROJECT_DIR$/src/UserAction.java" />
         <option value="$PROJECT_DIR$/src/ThreadsToolMainWindow.form" />
         <option value="$PROJECT_DIR$/src/ThreadsToolMainWindow.java" />
+        <option value="$PROJECT_DIR$/src/Thread.java" />
         <option value="$PROJECT_DIR$/src/ChartPanel.java" />
       </list>
     </option>
@@ -665,7 +694,14 @@
       <option name="project" value="LOCAL" />
       <updated>1464453634625</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Added ChartPanel">
+      <created>1465212690967</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1465212690967</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -762,11 +798,12 @@
     <MESSAGE value="Choosing directory dialog" />
     <MESSAGE value="Parsing threadsBlob and showing in a jlist" />
     <MESSAGE value="Added ChartPanel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added ChartPanel" />
+    <MESSAGE value="Initial visualisation is running" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial visualisation is running" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="97" />
+      <option name="time" value="103" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1011,13 +1048,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../intellij-community/platform/platform-api/src/com/intellij/openapi/actionSystem/ex/ActionUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="732">
-          <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/lib/json-20160212.jar!/org/json/JSONObject.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
@@ -1039,49 +1069,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ThreadsBlobParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="814">
-          <caret line="49" column="4" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Thread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="69" column="4" selection-start-line="69" selection-start-column="4" selection-end-line="69" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/UserAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
           <caret line="44" column="4" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../intellij-community/platform/platform-impl/src/com/intellij/ide/IdeRepaintManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1342">
-          <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#4926#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2524#2525#0" expanded="false" />
-            <element signature="e#2566#2567#0" expanded="false" />
-            <element signature="e#2604#2605#0" expanded="false" />
-            <element signature="e#2640#2641#0" expanded="false" />
-            <element signature="e#2793#2794#0" expanded="false" />
-            <element signature="e#2836#2837#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../intellij-community/platform/platform-impl/src/com/intellij/ide/IdeEventQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="862" column="0" selection-start-line="862" selection-start-column="0" selection-end-line="862" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1096,10 +1087,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ThreadsToolMainWindow.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../intellij-community/platform/platform-impl/src/com/intellij/ide/IdeRepaintManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1342">
+          <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ThreadsBlobParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="41" column="26" selection-start-line="41" selection-start-column="26" selection-end-line="41" selection-end-column="26" />
+          <folding>
+            <element signature="method#getInfo#0;class#ThreadsBlobParser#0" expanded="false" />
+            <element signature="method#initThreadAction#0;class#ThreadsBlobParser#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/VisualisationToolPlugin.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="37" column="33" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="33" />
+        <state relative-caret-position="330">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding>
             <element signature="method#initJsonFilesList#0;class#VisualisationToolPlugin#0" expanded="false" />
             <element signature="method#chooseDir#0;class#VisualisationToolPlugin#0" expanded="false" />
@@ -1110,32 +1131,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChartPanel.java">
+    <entry file="file://$PROJECT_DIR$/../intellij-community/platform/platform-api/src/com/intellij/openapi/actionSystem/ex/ActionUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="210" column="24" selection-start-line="210" selection-start-column="24" selection-end-line="210" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#1212:1395" expanded="false" />
-            <element signature="class#1434:1617" expanded="false" />
-            <element signature="class#1655:1850" expanded="false" />
-            <element signature="method#resizeSquare#0;class#ChartPanel#0" expanded="false" />
-            <element signature="e#4200#4201#0" expanded="true" />
-            <element signature="e#4232#4233#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="567">
+          <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../intellij-community/platform/platform-impl/src/com/intellij/ide/IdeEventQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="862" column="0" selection-start-line="862" selection-start-column="0" selection-end-line="862" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ThreadsToolMainWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+        <state relative-caret-position="501">
+          <caret line="175" column="22" selection-start-line="175" selection-start-column="22" selection-end-line="175" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#initActionsModel#0;class#ThreadsToolMainWindow#0" expanded="false" />
             <element signature="method#initSessionsModel#0;class#ThreadsToolMainWindow#0" expanded="false" />
             <element signature="method#initThreadsModel#0;class#ThreadsToolMainWindow#0" expanded="false" />
-            <element signature="method#updateCentralWindow#0;class#ThreadsToolMainWindow#0" expanded="false" />
             <element signature="method#updateUpperPart#0;class#ThreadsToolMainWindow#0" expanded="false" />
             <element signature="method#setLabel#0;class#ThreadsToolMainWindow#0" expanded="false" />
             <element signature="class#ListRenderer#0" expanded="false" />
@@ -1143,14 +1163,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ThreadsToolMainWindow.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
+    <entry file="file://$PROJECT_DIR$/src/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="49" column="12" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="12" />
+          <folding>
+            <element signature="method#ThreadAction#0;class#ThreadAction#0" expanded="false" />
+            <element signature="method#ThreadAction#1;class#ThreadAction#0" expanded="false" />
+          </folding>
+        </state>
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChartPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="207" column="38" selection-start-line="207" selection-start-column="38" selection-end-line="207" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#ChartPanel#0;class#ChartPanel#0" expanded="false" />
+            <element signature="class#1180:1363" expanded="false" />
+            <element signature="class#1402:1585" expanded="false" />
+            <element signature="class#1623:1818" expanded="false" />
+            <element signature="class#1855:2105" expanded="false" />
+            <element signature="method#initBorders#0;class#ChartPanel#0" expanded="false" />
+            <element signature="method#resizeSquare#0;class#ChartPanel#0" expanded="false" />
+            <element signature="method#moveSquare#0;class#ChartPanel#0" expanded="false" />
+            <element signature="e#5204#5205#0" expanded="true" />
+            <element signature="e#5236#5237#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
