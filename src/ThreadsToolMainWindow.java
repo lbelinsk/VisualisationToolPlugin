@@ -8,6 +8,7 @@ import java.util.List;
 public class ThreadsToolMainWindow extends JFrame
 {
     private final ArrayList<UserSession> sessions;
+    private ChartPanel chartPanel = new ChartPanel();
     private JPanel MainPanel;
     private JList<UserSession> SessionsList;
     private JList<UserAction> ActionsList;
@@ -31,6 +32,7 @@ public class ThreadsToolMainWindow extends JFrame
     private JList ThreadsList;
     private JScrollPane ThreadsListScrollPanel;
     private JPanel ThreadsPanel;
+    private JPanel CentralBorderPanel;
 
     ThreadsToolMainWindow(String title, ArrayList<UserSession> userSessions)
     {
@@ -56,9 +58,7 @@ public class ThreadsToolMainWindow extends JFrame
         ThreadsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ThreadsList.setCellRenderer(new ListRenderer());
 
-        if (SessionsList.getModel().getSize() > 0)
-            SessionsList.setSelectedIndex(0);
-
+        CentralBorderPanel.add(chartPanel);
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/VisualisationToolIcon.png"));
         setIconImage(icon.getImage());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -66,8 +66,11 @@ public class ThreadsToolMainWindow extends JFrame
         pack();
         setLocationRelativeTo(null);
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setMinimumSize(new Dimension(1400,800));
+        setMinimumSize(new Dimension(1500,800));
         setVisible(true);
+
+        if (SessionsList.getModel().getSize() > 0)
+            SessionsList.setSelectedIndex(0);
     }
 
     private void initActionsModel(DefaultListModel newModel, List<UserAction> actions)
@@ -91,7 +94,6 @@ public class ThreadsToolMainWindow extends JFrame
         {
             DefaultListModel<UserAction> model = (DefaultListModel<UserAction>)ActionsList.getModel();
             model.removeAllElements();
-            ActionsList.updateUI();
             if (!SessionsList.isSelectionEmpty())
             {
                 UserSession selectedSession = SessionsList.getSelectedValue();
@@ -170,6 +172,8 @@ public class ThreadsToolMainWindow extends JFrame
         DefaultListModel<Thread> threadModel = new DefaultListModel<>();
         initThreadsModel(threadModel, selectedAction.threads);
         ThreadsList.setModel(threadModel);
+        pack();
+        chartPanel.updateChart(selectedAction.threads);
     }
 }
 

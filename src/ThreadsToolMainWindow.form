@@ -125,7 +125,7 @@
           </grid>
         </children>
       </splitpane>
-      <grid id="b2bbe" layout-manager="BorderLayout" hgap="0" vgap="0">
+      <grid id="b2bbe" binding="CentralBorderPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="Center"/>
         <properties>
           <minimumSize width="1200" height="165"/>
