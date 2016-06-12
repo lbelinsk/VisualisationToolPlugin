@@ -29,9 +29,6 @@ public class ThreadsToolMainWindow extends JFrame
     private JLabel ActionNameLabel;
     private JLabel SeqNumLabel;
     private JLabel DurationLabel;
-    private JList ThreadsList;
-    private JScrollPane ThreadsListScrollPanel;
-    private JPanel ThreadsPanel;
     private JPanel CentralBorderPanel;
 
     ThreadsToolMainWindow(String title, ArrayList<UserSession> userSessions)
@@ -52,11 +49,6 @@ public class ThreadsToolMainWindow extends JFrame
         ActionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         ActionsList.setCellRenderer(new ListRenderer());
         ActionsList.addListSelectionListener(this::actionSelectionChanged);
-
-        DefaultListModel<Thread> threadsModel = new DefaultListModel<>();
-        ThreadsList.setModel(threadsModel);
-        ThreadsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        ThreadsList.setCellRenderer(new ListRenderer());
 
         CentralBorderPanel.add(chartPanel);
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/VisualisationToolIcon.png"));
@@ -81,11 +73,6 @@ public class ThreadsToolMainWindow extends JFrame
     private void initSessionsModel(DefaultListModel newModel, List<UserSession> sessions)
     {
         sessions.forEach(newModel::addElement);
-    }
-
-    private void initThreadsModel(DefaultListModel newModel, List<Thread> threads)
-    {
-        threads.forEach(newModel::addElement);
     }
 
     private void sessionSelectionChanged(ListSelectionEvent e)
@@ -139,7 +126,6 @@ public class ThreadsToolMainWindow extends JFrame
         Border in = BorderFactory.createRaisedBevelBorder();
         Border out = BorderFactory.createEmptyBorder(10,10,10,10);
         centralImageLabel.setBorder(BorderFactory.createCompoundBorder(out,in));
-        ThreadsPanel.setBorder(BorderFactory.createCompoundBorder(out,in));
 
         Border out2 = BorderFactory.createEmptyBorder(10,10,10,0);
         LabelsPanel.setBorder(BorderFactory.createCompoundBorder(out2, in));
@@ -169,10 +155,6 @@ public class ThreadsToolMainWindow extends JFrame
 
     private void updateGraphPart(UserAction selectedAction)
     {
-        DefaultListModel<Thread> threadModel = new DefaultListModel<>();
-        initThreadsModel(threadModel, selectedAction.threads);
-        ThreadsList.setModel(threadModel);
-        pack();
         chartPanel.updateChart(selectedAction.threads);
     }
 }

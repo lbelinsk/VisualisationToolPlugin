@@ -389,44 +389,6 @@
               </grid>
             </children>
           </grid>
-          <grid id="278f9" binding="ThreadsPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints border-constraint="East"/>
-            <properties>
-              <maximumSize width="204" height="2147483647"/>
-            </properties>
-            <border type="none"/>
-            <children>
-              <scrollpane id="9fade" binding="ThreadsListScrollPanel">
-                <constraints border-constraint="Center"/>
-                <properties>
-                  <foreground color="-4910848"/>
-                  <maximumSize width="204" height="32767"/>
-                  <minimumSize width="180" height="21"/>
-                  <preferredSize width="180" height="128"/>
-                  <verticalScrollBarPolicy value="22"/>
-                </properties>
-                <border type="none"/>
-                <children>
-                  <component id="f8605" class="javax.swing.JList" binding="ThreadsList">
-                    <constraints/>
-                    <properties>
-                      <foreground color="-16579060"/>
-                      <selectionMode value="0"/>
-                    </properties>
-                  </component>
-                </children>
-              </scrollpane>
-              <component id="f2a77" class="javax.swing.JLabel">
-                <constraints border-constraint="North"/>
-                <properties>
-                  <font name="Segoe UI" size="18" style="0"/>
-                  <horizontalAlignment value="0"/>
-                  <horizontalTextPosition value="2"/>
-                  <text value="&amp;Threads per action"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
         </children>
       </grid>
     </children>
