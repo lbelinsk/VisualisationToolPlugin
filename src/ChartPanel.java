@@ -1,9 +1,6 @@
 import com.intellij.ui.JBColor;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -11,14 +8,12 @@ import java.util.List;
 class C
 {
     static int RealWidth;
-    static int RealHeight;
-    static final int MarginX = 20;
+    static final int MarginX = 40;
     static final int MarginY = 20;
     static final int BorderMargin = 10;
     static int OriginX;
     static int OriginY;
     static int LastX;
-    static int LastY;
     static final int LineHeight = 18;
     static final int LineMargin = 8;
     static final int LineRadius = 5;
@@ -29,16 +24,17 @@ class C
 
 class ChartPanel extends JPanel
 {
-    //private RedSquare redMovingSquare = new RedSquare();
-    private List<Thread> currentThreads;
     private List<ThreadLine> threadLineList = new ArrayList<>();
     private int RealDurationMilliSec;
+    private JScrollPane scrollPane;
+    private int preferredHeight;
+
+    ChartPanel() { }
 
     @Override
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        //redMovingSquare.paintRedSquare(g);
 
         for (ThreadLine line: threadLineList)
         {
@@ -46,59 +42,12 @@ class ChartPanel extends JPanel
         }
     }
 
-    ChartPanel()
-    {
-        initBorders();
-
-//        addMouseListener(new MouseAdapter()
-//        {
-//            @Override
-//            public void mousePressed(MouseEvent e)
-//            {
-//                moveSquare(e.getX(), e.getY());
-//            }
-//        });
-
-//        addMouseMotionListener(new MouseAdapter()
-//        {
-//            @Override
-//            public void mouseDragged(MouseEvent e)
-//            {
-//                moveSquare(e.getX(), e.getY());
-//            }
-//        });
-
-//        addMouseWheelListener(new MouseAdapter()
-//        {
-//            @Override
-//            public void mouseWheelMoved(MouseWheelEvent e)
-//            {
-//                resizeSquare(e.getWheelRotation());
-//            }
-//        });
-
-        addComponentListener(new ComponentAdapter()
-        {
-            @Override
-            public void componentResized(ComponentEvent e)
-            {
-                super.componentResized(e);
-                updateChartDimension();
-                updateThreadLines();
-            }
-        });
-    }
-
-    private void initBorders()
-    {
-        Border in = BorderFactory.createLineBorder(JBColor.BLACK);
-        Border out = BorderFactory.createEmptyBorder(C.BorderMargin, C.BorderMargin, C.BorderMargin, C.BorderMargin);
-        setBorder(BorderFactory.createCompoundBorder(out,in));
+    void setScrollPane(JScrollPane scrollPane) {
+        this.scrollPane = scrollPane;
     }
 
     void updateChart(List<Thread> threads)
     {
-        this.currentThreads = threads;
         int RealDuration = Integer.MIN_VALUE;
         for (Thread thread : threads)
         {
@@ -106,73 +55,47 @@ class ChartPanel extends JPanel
                 RealDuration = thread.latestEnd;
         }
         RealDurationMilliSec = RealDuration;
+        preferredHeight = threads.size() * (C.LineHeight + C.LineMargin) + 2 * C.MarginY;
 
+        updateChartDimension();
+        fillThreadsList(threads);
+        revalidate();
+        repaint();
+    }
+
+    private void fillThreadsList(List<Thread> threads)
+    {
+        threadLineList.clear();
+        for (int i = 0; i < threads.size(); i++)
+        {
+            ThreadLine newThreadLine = new ThreadLine(i, threads.get(i));
+            threadLineList.add(newThreadLine);
+        }
+    }
+
+    public void updateResized()
+    {
         updateChartDimension();
         updateThreadLines();
     }
 
-    private void updateThreadLines()
-    {
-        threadLineList.clear();
-        for (int i = 0; i < currentThreads.size(); i++)
-        {
-            ThreadLine newThreadLine = new ThreadLine(i, currentThreads.get(i));
-            threadLineList.add(newThreadLine);
-        }
-        repaint();
-    }
-
     private void updateChartDimension()
     {
-        C.RealWidth = getSize().width - 2*C.BorderMargin - 2*C.MarginX;
-        C.RealHeight = getSize().height - 2*C.BorderMargin - 2* C.MarginY;
+        Dimension scrollDim = this.scrollPane.getSize();
+        C.RealWidth = scrollDim.width - 2*C.BorderMargin - 2*C.MarginX;
         C.OriginX = C.BorderMargin + C.MarginX;
         C.OriginY = C.BorderMargin + C.MarginY;
         C.LastX = C.OriginX + C.RealWidth;
-        C.LastY = C.OriginY + C.RealHeight;
         C.Factor = (double)C.RealWidth / RealDurationMilliSec;
+        setPreferredSize(new Dimension(C.RealWidth, this.preferredHeight));
     }
 
-//    private void resizeSquare(int wheelRotation)
-//    {
-//        final int CURR_X = redMovingSquare.getX();
-//        final int CURR_Y = redMovingSquare.getY();
-//        final int CURR_W = redMovingSquare.getWidth();
-//        final int OFFSET = 1;
-//
-//        repaint(CURR_X, CURR_Y, CURR_W + OFFSET , CURR_W + OFFSET);
-//
-//        int newWidth = CURR_W + wheelRotation;
-//        newWidth = newWidth < 5 ? 5 : newWidth > 100 ? 100 : newWidth;
-//        redMovingSquare.setWidth(newWidth);
-//
-//        repaint(redMovingSquare.getX(), redMovingSquare.getY(),
-//                redMovingSquare.getWidth() + OFFSET,
-//                redMovingSquare.getWidth() + OFFSET);
-//    }
-
-//    private void moveSquare(int x, int y)
-//    {
-//        final int CURR_X = redMovingSquare.getX();
-//        final int CURR_Y = redMovingSquare.getY();
-//        final int CURR_W = redMovingSquare.getWidth();
-//        final int OFFSET = 1;
-//
-//        if ((CURR_X!=x) || (CURR_Y!=y))
-//        {
-//            repaint(CURR_X, CURR_Y, CURR_W + OFFSET, CURR_W + OFFSET);
-//            int newX = x < C.OriginX ? C.OriginX : x > C.LastX - CURR_W ? C.LastX - CURR_W : x;
-//            int newY = y < C.OriginY ? C.OriginY : y > C.LastY - CURR_W ? C.LastY - CURR_W : y;
-//            redMovingSquare.setX(newX);
-//            redMovingSquare.setY(newY);
-//
-//            repaint(redMovingSquare.getX(), redMovingSquare.getY(),
-//                    redMovingSquare.getWidth() + OFFSET,
-//                    redMovingSquare.getWidth() + OFFSET);
-//        }
-//    }
-
-
+    private void updateThreadLines()
+    {
+        threadLineList.forEach(ThreadLine::updateState);
+        revalidate();
+        repaint();
+    }
 }
 
 
@@ -214,7 +137,7 @@ class ThreadLine
         }
     }
 
-    private void updateState()
+    public void updateState()
     {
         segments.clear();
         int Y = C.OriginY + row * (C.LineHeight + C.LineMargin);
@@ -227,44 +150,3 @@ class ThreadLine
         }
     }
 }
-
-//class RedSquare
-//{
-//    private int xPos = 50;
-//    private int yPos = 50;
-//    private int width = 20;
-//
-//    void setX(int xPos){
-//        this.xPos = xPos;
-//    }
-//
-//    int getX(){
-//        return xPos;
-//    }
-//
-//    void setY(int yPos){
-//        this.yPos = yPos;
-//    }
-//
-//    int getY(){
-//        return yPos;
-//    }
-//
-//    void setWidth(int width)
-//    {
-//        this.width = width;
-//    }
-//
-//    int getWidth(){
-//        return width;
-//    }
-//
-//
-//    void paintRedSquare(Graphics g)
-//    {
-//        g.setColor(JBColor.RED);
-//        g.fillRect(xPos, yPos, width, width);
-//        g.setColor(JBColor.BLACK);
-//        g.drawRect(xPos, yPos, width, width);
-//    }
-//}

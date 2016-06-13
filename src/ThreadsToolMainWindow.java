@@ -1,7 +1,12 @@
+import com.intellij.ui.JBColor;
+import com.intellij.ui.components.JBScrollPane;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.*;
 import java.util.List;
 
@@ -50,15 +55,31 @@ public class ThreadsToolMainWindow extends JFrame
         ActionsList.setCellRenderer(new ListRenderer());
         ActionsList.addListSelectionListener(this::actionSelectionChanged);
 
-        CentralBorderPanel.add(chartPanel);
+        JScrollPane scrollPane = new JBScrollPane();
+        scrollPane.setViewportView(chartPanel);
+        chartPanel.setScrollPane(scrollPane);
+        Border in = BorderFactory.createLineBorder(JBColor.BLACK);
+        Border out = BorderFactory.createEmptyBorder(C.BorderMargin, C.BorderMargin, C.BorderMargin, C.BorderMargin);
+        scrollPane.setBorder(BorderFactory.createCompoundBorder(out,in));
+        scrollPane.addComponentListener(new ComponentAdapter()
+        {
+            @Override
+            public void componentResized(ComponentEvent e)
+            {
+                super.componentResized(e);
+                chartPanel.updateResized();
+            }
+        });
+        scrollPane.getVerticalScrollBar().setUnitIncrement(12);
+
+        CentralBorderPanel.add(scrollPane);
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/VisualisationToolIcon.png"));
         setIconImage(icon.getImage());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setContentPane(MainPanel);
         pack();
         setLocationRelativeTo(null);
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setMinimumSize(new Dimension(1500,800));
+        //setMinimumSize(new Dimension(1500,800));
         setVisible(true);
 
         if (SessionsList.getModel().getSize() > 0)
