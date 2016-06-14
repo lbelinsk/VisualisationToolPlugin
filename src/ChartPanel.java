@@ -1,7 +1,4 @@
-import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
-
-import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -20,10 +17,17 @@ class C
     static int OriginX;
     static int OriginY;
     static int LastX;
-    static final Color LineBorder = JBColor.BLACK;
     static Double Factor = 1.0;
-    static Color EvenLineBackground = Color.WHITE;
-    static Color OddLineBackground = Gray._228;
+}
+
+class ChartColors
+{
+    static final Color EvenLineBackground = new Color(255, 255, 255);
+    static final Color OddLineBackground = new Color(228, 228, 228);
+    static final Color LineBorder = new Color(1, 1, 1);
+    static final Color MethodColor = new Color(71, 96, 196);
+    static final Color BlockingColor = new Color(221,52,39);
+    static final Color NetworkColor = new Color(0, 151, 50);
 }
 
 class ChartPanel extends JPanel
@@ -127,11 +131,11 @@ class ThreadLine
             this.length = length;
             switch (type)
             {
-                case METHOD: this.color = JBColor.BLUE;
+                case METHOD: this.color = ChartColors.MethodColor;
                     break;
-                case NETWORK: this.color = JBColor.CYAN;
+                case NETWORK: this.color = ChartColors.NetworkColor;
                     break;
-                case BLOCKING: this.color = JBColor.RED;
+                case BLOCKING: this.color = ChartColors.BlockingColor;
                     break;
             }
         }
@@ -147,7 +151,7 @@ class ThreadLine
     void paintThreadLine(Graphics g)
     {
         //Fill threads background
-        Color rowBackground = row % 2 == 0 ? C.EvenLineBackground : C.OddLineBackground;
+        Color rowBackground = row % 2 == 0 ? ChartColors.EvenLineBackground : ChartColors.OddLineBackground;
         g.setColor(rowBackground);
         g.fillRect(0, rowY - C.LineMargin/2, C.FullWidth, C.LineHeight + C.LineMargin);
 
@@ -160,7 +164,7 @@ class ThreadLine
         {
             g.setColor(s.color);
             g.fillRect(s.startX, s.startY, s.length, C.LineHeight);
-            g.setColor(C.LineBorder);
+            g.setColor(ChartColors.LineBorder);
             g.drawRect(s.startX, s.startY, s.length, C.LineHeight);
         }
     }
