@@ -160,8 +160,6 @@
                         <rowspec value="center:max(d;4px):noGrow"/>
                         <rowspec value="top:4dlu:noGrow"/>
                         <rowspec value="center:max(d;4px):noGrow"/>
-                        <rowspec value="top:4dlu:noGrow"/>
-                        <rowspec value="center:max(d;4px):noGrow"/>
                         <colspec value="fill:d:noGrow"/>
                         <constraints/>
                         <properties/>
@@ -174,7 +172,7 @@
                             </constraints>
                             <properties>
                               <font name="Segoe UI" size="18"/>
-                              <text value="Vendor: "/>
+                              <text value="Device: "/>
                             </properties>
                           </component>
                           <component id="fd3fb" class="javax.swing.JLabel">
@@ -197,22 +195,10 @@
                               <text value="Network: "/>
                             </properties>
                           </component>
-                          <component id="6f3a2" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                              <forms/>
-                            </constraints>
-                            <properties>
-                              <font name="Segoe UI" size="18"/>
-                              <text value="Carrier: "/>
-                            </properties>
-                          </component>
                         </children>
                       </grid>
                       <grid id="d8ed2" binding="SessionValuesPanel" layout-manager="FormLayout">
                         <rowspec value="center:d:noGrow"/>
-                        <rowspec value="top:4dlu:noGrow"/>
-                        <rowspec value="center:max(d;4px):noGrow"/>
                         <rowspec value="top:4dlu:noGrow"/>
                         <rowspec value="center:max(d;4px):noGrow"/>
                         <rowspec value="top:4dlu:noGrow"/>
@@ -224,7 +210,7 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="6ff88" class="javax.swing.JLabel" binding="VendorLabel">
+                          <component id="6ff88" class="javax.swing.JLabel" binding="DeviceLabel">
                             <constraints>
                               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                               <forms/>
@@ -254,16 +240,6 @@
                               <text value="Unknown"/>
                             </properties>
                           </component>
-                          <component id="cc6db" class="javax.swing.JLabel" binding="CarrierLabel">
-                            <constraints>
-                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                              <forms/>
-                            </constraints>
-                            <properties>
-                              <font name="Segoe UI" size="18"/>
-                              <text value="Unknown"/>
-                            </properties>
-                          </component>
                         </children>
                       </grid>
                     </children>
@@ -275,8 +251,6 @@
                     <children>
                       <grid id="c2eb7" binding="ActionTitlesPanel" layout-manager="FormLayout">
                         <rowspec value="center:d:noGrow"/>
-                        <rowspec value="top:4dlu:noGrow"/>
-                        <rowspec value="center:max(d;4px):noGrow"/>
                         <rowspec value="top:4dlu:noGrow"/>
                         <rowspec value="center:max(d;4px):noGrow"/>
                         <rowspec value="top:4dlu:noGrow"/>
@@ -293,7 +267,7 @@
                             </constraints>
                             <properties>
                               <font name="Segoe UI" size="18"/>
-                              <text value="Context name: "/>
+                              <text value="Screen name: "/>
                             </properties>
                           </component>
                           <component id="fe15d" class="javax.swing.JLabel">
@@ -306,19 +280,9 @@
                               <text value="Action name: "/>
                             </properties>
                           </component>
-                          <component id="ac1d0" class="javax.swing.JLabel">
-                            <constraints>
-                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                              <forms/>
-                            </constraints>
-                            <properties>
-                              <font name="Segoe UI" size="18"/>
-                              <text value="Seq. num: "/>
-                            </properties>
-                          </component>
                           <component id="1481e" class="javax.swing.JLabel">
                             <constraints>
-                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                               <forms/>
                             </constraints>
                             <properties>
@@ -330,8 +294,6 @@
                       </grid>
                       <grid id="3c4e7" binding="ActionValuesPanel" layout-manager="FormLayout">
                         <rowspec value="center:d:noGrow"/>
-                        <rowspec value="top:4dlu:noGrow"/>
-                        <rowspec value="center:max(d;4px):noGrow"/>
                         <rowspec value="top:4dlu:noGrow"/>
                         <rowspec value="center:max(d;4px):noGrow"/>
                         <rowspec value="top:4dlu:noGrow"/>
@@ -361,19 +323,9 @@
                               <text value="Unknown"/>
                             </properties>
                           </component>
-                          <component id="bfa94" class="javax.swing.JLabel" binding="SeqNumLabel">
-                            <constraints>
-                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                              <forms/>
-                            </constraints>
-                            <properties>
-                              <font name="Segoe UI" size="18"/>
-                              <text value="Unknown"/>
-                            </properties>
-                          </component>
                           <component id="4cd7" class="javax.swing.JLabel" binding="DurationLabel">
                             <constraints>
-                              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                               <forms/>
                             </constraints>
                             <properties>

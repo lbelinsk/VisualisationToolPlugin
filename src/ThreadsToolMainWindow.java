@@ -21,10 +21,9 @@ public class ThreadsToolMainWindow extends JFrame
     private JLabel centralImageLabel;
     private JPanel SessionsPanel;
     private JPanel LabelsPanel;
-    private JLabel VendorLabel;
+    private JLabel DeviceLabel;
     private JLabel OSLabel;
     private JLabel NetworkLabel;
-    private JLabel CarrierLabel;
     private JPanel SessionValuesPanel;
     private JPanel SessionTitlesPanel;
     private JPanel ActionsPanel;
@@ -32,7 +31,6 @@ public class ThreadsToolMainWindow extends JFrame
     private JPanel ActionValuesPanel;
     private JLabel ContextNameLabel;
     private JLabel ActionNameLabel;
-    private JLabel SeqNumLabel;
     private JLabel DurationLabel;
     private JPanel CentralBorderPanel;
 
@@ -59,7 +57,7 @@ public class ThreadsToolMainWindow extends JFrame
         scrollPane.setViewportView(chartPanel);
         chartPanel.setScrollPane(scrollPane);
         Border in = BorderFactory.createLineBorder(JBColor.BLACK);
-        Border out = BorderFactory.createEmptyBorder(C.BorderMargin, C.BorderMargin, C.BorderMargin, C.BorderMargin);
+        Border out = BorderFactory.createEmptyBorder(0,C.BorderMargin,0,C.BorderMargin);
         scrollPane.setBorder(BorderFactory.createCompoundBorder(out,in));
         scrollPane.addComponentListener(new ComponentAdapter()
         {
@@ -155,14 +153,12 @@ public class ThreadsToolMainWindow extends JFrame
         ActionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         ActionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        setLabel(VendorLabel, selectedSession.vendor + " " + selectedSession.model);
+        setLabel(DeviceLabel, selectedSession.vendor + " " + selectedSession.model);
         setLabel(OSLabel, selectedSession.OSName + " " + selectedSession.OSVer);
         setLabel(NetworkLabel, selectedSession.netType);
-        setLabel(CarrierLabel, selectedSession.carrier);
 
         setLabel(ContextNameLabel, selectedAction.ctxName);
         setLabel(ActionNameLabel, selectedAction.name);
-        setLabel(SeqNumLabel, String.valueOf(selectedAction.uaSeq));
         setLabel(DurationLabel, String.valueOf(selectedAction.duration));
     }
 

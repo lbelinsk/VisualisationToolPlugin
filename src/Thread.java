@@ -38,24 +38,24 @@ public class Thread implements Comparable<Thread>
     @Override
     public String toString()
     {
-        return " #" + threadId + " (" + threadActions.size() + " tasks)";
+        return " #" + threadId;
     }
 }
 
 class ThreadAction
 {
-    private ThreadActionType type;
-    private long userActionId;
-    private int threadId;
-    private String name;
+    ThreadActionType type;
+    long userActionId;
+    int threadId;
+    String name;
     int startTime;
     int duration;
     String callingMethod;
 
     // Relevant for NET threadActionType only
-    private String Url;
-    private int responseStart;
-    private int responseCode;
+    String Url;
+    int responseStart;
+    int responseCode;
 
     ThreadAction(
             ThreadActionType type,
