@@ -3,6 +3,7 @@ import com.intellij.ui.components.JBScrollPane;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -13,6 +14,7 @@ import java.util.List;
 public class ThreadsToolMainWindow extends JFrame
 {
     private final ArrayList<UserSession> sessions;
+    private final int borderMargin = 10;
     private ChartPanel chartPanel = new ChartPanel();
     private JPanel MainPanel;
     private JList<UserSession> SessionsList;
@@ -40,37 +42,14 @@ public class ThreadsToolMainWindow extends JFrame
         this.sessions = userSessions;
         super.frameInit();
 
-        DefaultListModel<UserSession> sessionsModel = new DefaultListModel<>();
-        initSessionsModel(sessionsModel, this.sessions);
-        SessionsList.setModel(sessionsModel);
-        SessionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        SessionsList.setCellRenderer(new ListRenderer());
-        SessionsList.addListSelectionListener(this::sessionSelectionChanged);
+        initSelectionLists();
+        initSessionsModel();
+        ActionsList.setModel(new DefaultListModel<>());
 
-        DefaultListModel<UserAction> actionsModel = new DefaultListModel<>();
-        ActionsList.setModel(actionsModel);
-        ActionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        ActionsList.setCellRenderer(new ListRenderer());
-        ActionsList.addListSelectionListener(this::actionSelectionChanged);
+        initLegendPanel();
+        initChartScrollPane();
+        setBorders();
 
-        JScrollPane scrollPane = new JBScrollPane();
-        scrollPane.setViewportView(chartPanel);
-        chartPanel.setScrollPane(scrollPane);
-        Border in = BorderFactory.createLineBorder(JBColor.BLACK);
-        Border out = BorderFactory.createEmptyBorder(0,C.BorderMargin,0,C.BorderMargin);
-        scrollPane.setBorder(BorderFactory.createCompoundBorder(out,in));
-        scrollPane.addComponentListener(new ComponentAdapter()
-        {
-            @Override
-            public void componentResized(ComponentEvent e)
-            {
-                super.componentResized(e);
-                chartPanel.updateResized();
-            }
-        });
-        scrollPane.getVerticalScrollBar().setUnitIncrement(12);
-
-        CentralBorderPanel.add(scrollPane);
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/VisualisationToolIcon.png"));
         setIconImage(icon.getImage());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -84,14 +63,67 @@ public class ThreadsToolMainWindow extends JFrame
             SessionsList.setSelectedIndex(0);
     }
 
+    private void initChartScrollPane()
+    {
+        JScrollPane scrollPane = new JBScrollPane();
+        scrollPane.setViewportView(chartPanel);
+        chartPanel.setScrollPane(scrollPane);
+        Border in = BorderFactory.createLineBorder(JBColor.BLACK);
+        Border out = BorderFactory.createEmptyBorder(0,borderMargin,0,borderMargin);
+        scrollPane.setBorder(BorderFactory.createCompoundBorder(out,in));
+        scrollPane.addComponentListener(new ComponentAdapter()
+        {
+            @Override
+            public void componentResized(ComponentEvent e)
+            {
+                super.componentResized(e);
+                chartPanel.updateResized();
+            }
+        });
+        scrollPane.getVerticalScrollBar().setUnitIncrement(12);
+        CentralBorderPanel.add(scrollPane);
+    }
+
+    private void initSelectionLists()
+    {
+        SessionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        SessionsList.setCellRenderer(new ListRenderer());
+        SessionsList.addListSelectionListener(this::sessionSelectionChanged);
+
+        ActionsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ActionsList.setCellRenderer(new ListRenderer());
+        ActionsList.addListSelectionListener(this::actionSelectionChanged);
+    }
+
+    private void initLegendPanel()
+    {
+        int sideSize = 15;
+        JLabel title = new JLabel(" Thread action types: ");
+        title.setBorder(new EmptyBorder(0,10,0,10));
+        RectangleComponent methodRect = new RectangleComponent("Method ", ChartColors.MethodColor, sideSize);
+        RectangleComponent networkRect = new RectangleComponent("Network ", ChartColors.NetworkColor, sideSize);
+        RectangleComponent blockingRect = new RectangleComponent("Blocking ", ChartColors.BlockingColor, sideSize);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.add(title);
+        panel.add(methodRect);
+        panel.add(networkRect);
+        panel.add(blockingRect);
+        panel.add(Box.createHorizontalGlue());
+        CentralNorthPanel.add(panel, BorderLayout.SOUTH);
+    }
+
     private void initActionsModel(DefaultListModel newModel, List<UserAction> actions)
     {
         actions.forEach(newModel::addElement);
     }
 
-    private void initSessionsModel(DefaultListModel newModel, List<UserSession> sessions)
+    private void initSessionsModel()
     {
-        sessions.forEach(newModel::addElement);
+        DefaultListModel<UserSession> sessionsModel = new DefaultListModel<>();
+        sessions.forEach(sessionsModel::addElement);
+        SessionsList.setModel(sessionsModel);
     }
 
     private void sessionSelectionChanged(ListSelectionEvent e)
@@ -135,23 +167,12 @@ public class ThreadsToolMainWindow extends JFrame
             return;
         }
         updateUpperPart(selectedAction, selectedSession);
-        updateGraphPart(selectedAction);
+        updateChartPart(selectedAction);
     }
 
     private void updateUpperPart(UserAction selectedAction, UserSession selectedSession)
     {
-        //TODO: consider setting the borders once in constructor
         centralImageLabel.setIcon(new ImageIcon(selectedAction.image));
-        Border in = BorderFactory.createRaisedBevelBorder();
-        Border out = BorderFactory.createEmptyBorder(10,10,10,10);
-        centralImageLabel.setBorder(BorderFactory.createCompoundBorder(out,in));
-
-        Border out2 = BorderFactory.createEmptyBorder(10,10,10,0);
-        LabelsPanel.setBorder(BorderFactory.createCompoundBorder(out2, in));
-        SessionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        SessionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,20));
-        ActionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        ActionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         setLabel(DeviceLabel, selectedSession.vendor + " " + selectedSession.model);
         setLabel(OSLabel, selectedSession.OSName + " " + selectedSession.OSVer);
@@ -170,32 +191,24 @@ public class ThreadsToolMainWindow extends JFrame
             Label.setText("Unknown");
     }
 
-    private void updateGraphPart(UserAction selectedAction)
+    private void updateChartPart(UserAction selectedAction)
     {
         chartPanel.updateChart(selectedAction.threads);
     }
-}
 
-class ListRenderer extends DefaultListCellRenderer {
-    public Component getListCellRendererComponent(JList<?> list,
-                                                  Object value,
-                                                  int index,
-                                                  boolean isSelected,
-                                                  boolean cellHasFocus) {
-        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        setOpaque(true);
-        setIconTextGap(12);
-        if (value instanceof UserSession)
-        {
-            UserSession session = (UserSession) value;
-            setText(" " + (index + 1) + ". " + session.toString());
-        }
-        else if (value instanceof UserAction)
-        {
-            UserAction action = (UserAction) value;
-            setText(" " + (index + 1) + ". " + action.toString());
-            //setIcon(action.getSmallIcon());
-        }
-        return this;
+    private void setBorders()
+    {
+        Border in = BorderFactory.createRaisedBevelBorder();
+        Border out = BorderFactory.createEmptyBorder(10,10,10,10);
+        centralImageLabel.setBorder(BorderFactory.createCompoundBorder(out,in));
+
+        Border out2 = BorderFactory.createEmptyBorder(10,10,10,0);
+        LabelsPanel.setBorder(BorderFactory.createCompoundBorder(out2, in));
+
+        SessionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        SessionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,20));
+        ActionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        ActionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
     }
 }
+
