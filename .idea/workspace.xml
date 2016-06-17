@@ -4,12 +4,8 @@
     <bookmark url="file://$PROJECT_DIR$/src/UserAction.java" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a315a0b3-17ad-4b9b-973f-3c6a845e5c52" name="Default" comment="improved labels layout">
+    <list default="true" id="a315a0b3-17ad-4b9b-973f-3c6a845e5c52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ChartPanel.java" afterPath="$PROJECT_DIR$/src/ChartPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ThreadsBlobParser.java" afterPath="$PROJECT_DIR$/src/ThreadsBlobParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ThreadsToolMainWindow.form" afterPath="$PROJECT_DIR$/src/ThreadsToolMainWindow.form" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ThreadsToolMainWindow.java" afterPath="$PROJECT_DIR$/src/ThreadsToolMainWindow.java" />
     </list>
     <ignored path="VisualisationToolPlugin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -809,7 +805,14 @@
       <option name="project" value="LOCAL" />
       <updated>1465939100466</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="improved labels layout">
+      <created>1466191714826</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1466191714826</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TodoView">
