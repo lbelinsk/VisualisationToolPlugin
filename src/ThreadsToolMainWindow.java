@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -15,7 +16,7 @@ public class ThreadsToolMainWindow extends JFrame
 {
     private final ArrayList<UserSession> sessions;
     private final int borderMargin = 10;
-    private ChartPanel chartPanel = new ChartPanel();
+    private ChartPanel chartPanel;
     private JPanel MainPanel;
     private JList<UserSession> SessionsList;
     private JList<UserAction> ActionsList;
@@ -30,6 +31,8 @@ public class ThreadsToolMainWindow extends JFrame
     private JPanel CentralBorderPanel;
     private JPanel labelsPanel;
     private JPanel lastRowPanel;
+    private JTextPane ThreadsTextPane;
+    private JScrollPane ThreadTextScrollPane;
 
     ThreadsToolMainWindow(String title, ArrayList<UserSession> userSessions)
     {
@@ -60,6 +63,10 @@ public class ThreadsToolMainWindow extends JFrame
 
     private void initChartScrollPane()
     {
+        DefaultCaret caret = (DefaultCaret)ThreadsTextPane.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+        chartPanel = new ChartPanel();
+        chartPanel.setTextArea(ThreadsTextPane);
         JScrollPane scrollPane = new JBScrollPane();
         scrollPane.setViewportView(chartPanel);
         chartPanel.setScrollPane(scrollPane);
@@ -106,7 +113,6 @@ public class ThreadsToolMainWindow extends JFrame
         panel.add(networkRect);
         panel.add(blockingRect);
         panel.add(Box.createHorizontalGlue());
-        //CentralNorthPanel.add(panel, BorderLayout.SOUTH);
         lastRowPanel.add(panel,BorderLayout.CENTER );
     }
 
@@ -194,6 +200,7 @@ public class ThreadsToolMainWindow extends JFrame
 
     private void setBorders()
     {
+        ThreadTextScrollPane.setBorder(BorderFactory.createEmptyBorder());
         CentralNorthPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
 //        Border in = BorderFactory.createRaisedBevelBorder();

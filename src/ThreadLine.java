@@ -10,19 +10,45 @@ class ThreadLine
     private int rowY;
     private List<Segment> segments = new ArrayList<>();
 
-    private class Segment
+    Segment selectSegment(int pixelX)
+    {
+        for (int i = segments.size()-1; i>=0; i--)
+        {
+            Segment seg = segments.get(i);
+            if (seg.startX <= pixelX && seg.startX + seg.length >= pixelX)
+            {
+                seg.isSelected = true;
+                return seg;
+            }
+        }
+        return null;
+    }
+
+    void deselectSegments()
+    {
+        for (Segment seg : segments)
+        {
+            seg.isSelected = false;
+        }
+    }
+
+    class Segment
     {
         int startX;
         int startY;
         int length;
         Color color;
+        boolean isSelected;
+        ThreadAction action;
 
-        Segment(int startX, int startY, int length, ThreadActionType type)
+        Segment(int startX, int startY, int length, ThreadAction action)
         {
             this.startX = startX;
             this.startY = startY;
             this.length = length;
-            switch (type)
+            this.action = action;
+
+            switch (action.type)
             {
                 case METHOD: this.color = ChartColors.MethodColor;
                     break;
@@ -31,6 +57,23 @@ class ThreadLine
                 case BLOCKING: this.color = ChartColors.BlockingColor;
                     break;
             }
+        }
+
+        @Override
+        public String toString()
+        {
+            String sharedString = "Name:    \t" + action.name + "\n" +
+                                  "Start:   \t" + action.startTime + "\n" +
+                                  "Duration:\t" + action.duration + "\n" +
+                                  "End:     \t" + (action.startTime + action.duration);
+            switch (action.type)
+            {
+                case METHOD: return "METHOD\n" + sharedString;
+                case NETWORK: return "NETWORK\n" + sharedString + "\n" +
+                                     "URL:   \t" + action.Url + action;
+                case BLOCKING: return "BLOCKING\n" + sharedString;
+            }
+            return "";
         }
     }
 
@@ -56,10 +99,15 @@ class ThreadLine
         //Draw all thread actions
         for (Segment s : segments)
         {
-            g.setColor(s.color);
+            if (s.isSelected)
+            {
+                g.setColor(s.color.brighter().brighter());
+            }
+            else
+            {
+                g.setColor(s.color);
+            }
             g.fillRect(s.startX, s.startY, s.length, C.LineHeight);
-            g.setColor(ChartColors.LineBorder);
-            g.drawRect(s.startX, s.startY, s.length, C.LineHeight);
         }
     }
 
@@ -72,7 +120,7 @@ class ThreadLine
         {
             int X = (int)Math.round(action.startTime * C.Factor) + C.OriginX;
             int L = (int)Math.round(action.duration * C.Factor);
-            segments.add(new Segment(X, rowY, L, action.type));
+            segments.add(new Segment(X, rowY, L, action));
         }
     }
 }

@@ -1,6 +1,8 @@
 import com.intellij.ui.JBColor;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
 
@@ -23,7 +25,6 @@ class ChartColors
 {
     static final Color EvenLineBackground = new Color(255, 255, 255);
     static final Color OddLineBackground = new Color(228, 228, 228);
-    static final Color LineBorder = new Color(1, 1, 1);
     static final Color MethodColor = new Color(71, 96, 196);
     static final Color BlockingColor = new Color(221,52,39);
     static final Color NetworkColor = new Color(0, 151, 50);
@@ -35,9 +36,42 @@ class ChartPanel extends JPanel
     private int RealDurationMilliSec;
     private JScrollPane scrollPane;
     private int preferredHeight;
+    private JTextPane textPane;
 
-    ChartPanel() {
+    ChartPanel()
+    {
         setBackground(new JBColor(new Color(253, 253, 254), new Color(253, 253, 254)));
+
+        addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                selectThreadLine(e.getX(),e.getY());
+            }
+        });
+    }
+
+    private void selectThreadLine(int x, int y)
+    {
+        deselectAllSegments();
+        textPane.setText("");
+
+        int row = y / (C.LineMargin + C.LineHeight);
+        int offset = y % (C.LineMargin + C.LineHeight);
+        if (offset > C.MarginY &
+            offset < C.MarginY + C.LineHeight &&
+            row < threadLineList.size())
+        {
+            ThreadLine.Segment seg = threadLineList.get(row).selectSegment(x);
+            if (seg != null)
+            {
+                textPane.setText(seg.toString());
+            }
+        }
+        repaint();
+    }
+
+    private void deselectAllSegments()
+    {
+        threadLineList.forEach(ThreadLine::deselectSegments);
     }
 
     @Override
@@ -57,6 +91,7 @@ class ChartPanel extends JPanel
 
     void updateChart(List<Thread> threads)
     {
+        textPane.setText("");
         int RealDuration = Integer.MIN_VALUE;
         for (Thread thread : threads)
         {
@@ -105,5 +140,10 @@ class ChartPanel extends JPanel
         threadLineList.forEach(ThreadLine::updateState);
         revalidate();
         repaint();
+    }
+
+    void setTextArea(JTextPane threadsTextPane)
+    {
+        this.textPane = threadsTextPane;
     }
 }
