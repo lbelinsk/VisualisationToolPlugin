@@ -127,9 +127,6 @@ class ThreadsBlobParser
                         blockName);
             default:
                 throw new IllegalArgumentException("Unknown thread operation: " + items[0]);
-
         }
     }
-
-
 }

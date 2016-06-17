@@ -13,7 +13,6 @@ class C
     static final int LineMargin = 15;
     static final int MarginX = 40;
     static final int MarginY = LineMargin/2;
-    static final int BorderMargin = 10;
     static int OriginX;
     static int OriginY;
     static int LastX;

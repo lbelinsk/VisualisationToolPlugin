@@ -21,20 +21,15 @@ public class ThreadsToolMainWindow extends JFrame
     private JList<UserAction> ActionsList;
     private JPanel CentralNorthPanel;
     private JLabel centralImageLabel;
-    private JPanel SessionsPanel;
-    private JPanel LabelsPanel;
     private JLabel DeviceLabel;
     private JLabel OSLabel;
     private JLabel NetworkLabel;
-    private JPanel SessionValuesPanel;
-    private JPanel SessionTitlesPanel;
-    private JPanel ActionsPanel;
-    private JPanel ActionTitlesPanel;
-    private JPanel ActionValuesPanel;
     private JLabel ContextNameLabel;
     private JLabel ActionNameLabel;
     private JLabel DurationLabel;
     private JPanel CentralBorderPanel;
+    private JPanel labelsPanel;
+    private JPanel lastRowPanel;
 
     ThreadsToolMainWindow(String title, ArrayList<UserSession> userSessions)
     {
@@ -99,7 +94,7 @@ public class ThreadsToolMainWindow extends JFrame
     {
         int sideSize = 15;
         JLabel title = new JLabel(" Thread action types: ");
-        title.setBorder(new EmptyBorder(0,10,0,10));
+        title.setBorder(new EmptyBorder(0,20,0,10));
         RectangleComponent methodRect = new RectangleComponent("Method ", ChartColors.MethodColor, sideSize);
         RectangleComponent networkRect = new RectangleComponent("Network ", ChartColors.NetworkColor, sideSize);
         RectangleComponent blockingRect = new RectangleComponent("Blocking ", ChartColors.BlockingColor, sideSize);
@@ -111,7 +106,8 @@ public class ThreadsToolMainWindow extends JFrame
         panel.add(networkRect);
         panel.add(blockingRect);
         panel.add(Box.createHorizontalGlue());
-        CentralNorthPanel.add(panel, BorderLayout.SOUTH);
+        //CentralNorthPanel.add(panel, BorderLayout.SOUTH);
+        lastRowPanel.add(panel,BorderLayout.CENTER );
     }
 
     private void initActionsModel(DefaultListModel newModel, List<UserAction> actions)
@@ -198,17 +194,20 @@ public class ThreadsToolMainWindow extends JFrame
 
     private void setBorders()
     {
-        Border in = BorderFactory.createRaisedBevelBorder();
-        Border out = BorderFactory.createEmptyBorder(10,10,10,10);
-        centralImageLabel.setBorder(BorderFactory.createCompoundBorder(out,in));
+        CentralNorthPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        Border out2 = BorderFactory.createEmptyBorder(10,10,10,0);
-        LabelsPanel.setBorder(BorderFactory.createCompoundBorder(out2, in));
+//        Border in = BorderFactory.createRaisedBevelBorder();
+//        Border out = BorderFactory.createEmptyBorder(10,10,10,10);
+//        centralImageLabel.setBorder(BorderFactory.createCompoundBorder(out,in));
+          centralImageLabel.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
 
-        SessionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        SessionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,20));
-        ActionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        ActionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+       // Border out2 = BorderFactory.createEmptyBorder(10,10,10,0);
+//        LabelsPanel.setBorder(BorderFactory.createCompoundBorder(out2, in));
+
+//        SessionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+//        SessionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,20));
+//        ActionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+//        ActionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
     }
 }
 
