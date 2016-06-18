@@ -20,7 +20,6 @@ class UserAction implements Comparable<UserAction>
     String ctxName;
     List<Thread> threads;
 
-
     @Override
     public int compareTo(@NotNull UserAction otherAction) {
         if (this.uaSeq < otherAction.uaSeq) {
@@ -34,10 +33,12 @@ class UserAction implements Comparable<UserAction>
     public String toString()
     {
         String title;
-        if (ctxName.isEmpty() && name.isEmpty())
-            title = "unknown (ua_seq = " + this.uaSeq + ")";
+        String thread =  (threads.size() == 1) ? " thread)" : " threads)";
+        String threadsNum = "  (" + threads.size() + thread;
+        if (ctxName.isEmpty())
+            title = "unknown" + threadsNum;
         else
-            title = ctxName + ": " + name;
+            title = ctxName + threadsNum;
 
         return title;
     }

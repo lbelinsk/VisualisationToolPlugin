@@ -37,6 +37,7 @@ public class UserSession
     public String toString()
     {
         //TODO: consider adding session's identifier (for example date/time)
-        return model + " (" + actions.size() + " actions)";
+        String action = (actions.size() == 1) ? " action)" : " actions)";
+        return model + " (" + actions.size() + action;
     }
 }

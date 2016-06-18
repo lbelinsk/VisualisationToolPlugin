@@ -30,7 +30,7 @@
           <dividerSize value="5"/>
           <foreground color="-16579060"/>
           <orientation value="0"/>
-          <preferredSize width="400" height="47"/>
+          <preferredSize width="280" height="47"/>
           <resizeWeight value="0.25"/>
         </properties>
         <border type="none"/>
