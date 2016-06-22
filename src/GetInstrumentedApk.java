@@ -6,7 +6,6 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.prefs.Preferences;
-import java.lang.Runnable;
 import java.awt.event.WindowAdapter;
 import java.awt.event.*;
 import org.apache.http.HttpResponse;
@@ -20,10 +19,6 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.util.EntityUtils;
 import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.xerces.impl.Constants;
 import java.util.List;
 
 
@@ -56,7 +51,7 @@ public class GetInstrumentedApk extends AnAction {
         if (path == null) return;
         APKFilePath = path.toString();
         ApkFile = new File(APKFilePath);
-        setProgresDialog("Uploading APK file...");
+        setProgressDialog("Uploading APK file...");
 
         SwingWorker worker = new SwingWorker<Void, Integer>() {
             @Override
@@ -122,7 +117,7 @@ public class GetInstrumentedApk extends AnAction {
         worker.execute();
     }
 
-    private void setProgresDialog(String title)
+    private void setProgressDialog(String title)
     {
         if(!isAdaptedOnClose) {
             isAdaptedOnClose = true;
@@ -149,6 +144,7 @@ public class GetInstrumentedApk extends AnAction {
         panel.setBorder(BorderFactory.createEmptyBorder(11, 11, 11, 11));
 
         dialog.setTitle("Getting Instrumented APK");
+        dialog.setAlwaysOnTop(true);
         dialog.getContentPane().add(panel);
         dialog.setResizable(false);
         dialog.pack();
