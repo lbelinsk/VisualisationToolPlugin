@@ -47,6 +47,11 @@
             description="The tool visualises the threads of android application using HPE-instrumented APK">
       <add-to-group group-id="MainToolBar" anchor="last"/>
     </action>
+    <action id="VisualizationToolPlugin.GetInstrumentedApk" class="GetInstrumentedApk" text="Get Instrumented Apk"
+            description="Upload the APK file to HPE website and recieves the Instrumented APK">
+      <add-to-group group-id="ToolsMenu" anchor="last"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl I"/>
+    </action>
   </actions>
 
 </idea-plugin>
