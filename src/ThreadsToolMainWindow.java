@@ -29,7 +29,6 @@ public class ThreadsToolMainWindow extends JFrame
     private JLabel ActionNameLabel;
     private JLabel DurationLabel;
     private JPanel CentralBorderPanel;
-    private JPanel labelsPanel;
     private JPanel lastRowPanel;
     private JTextPane ThreadsTextPane;
     private JScrollPane ThreadTextScrollPane;
@@ -65,6 +64,7 @@ public class ThreadsToolMainWindow extends JFrame
     {
         DefaultCaret caret = (DefaultCaret)ThreadsTextPane.getCaret();
         caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+        ThreadsTextPane.setEditable(false);
         chartPanel = new ChartPanel();
         chartPanel.setTextArea(ThreadsTextPane);
         JScrollPane scrollPane = new JBScrollPane();
@@ -99,12 +99,11 @@ public class ThreadsToolMainWindow extends JFrame
 
     private void initLegendPanel()
     {
-        int sideSize = 15;
         JLabel title = new JLabel(" Thread action types: ");
         title.setBorder(new EmptyBorder(0,20,0,10));
-        RectangleComponent methodRect = new RectangleComponent("Method ", ChartColors.MethodColor, sideSize);
-        RectangleComponent networkRect = new RectangleComponent("Network ", ChartColors.NetworkColor, sideSize);
-        RectangleComponent blockingRect = new RectangleComponent("Blocking ", ChartColors.BlockingColor, sideSize);
+        RectangleComponent methodRect = new RectangleComponent("Method ", ChartColors.MethodColor, C.LegendSquareSideSize);
+        RectangleComponent networkRect = new RectangleComponent("Network ", ChartColors.NetworkColor, C.LegendSquareSideSize);
+        RectangleComponent blockingRect = new RectangleComponent("Blocking ", ChartColors.BlockingColor, C.LegendSquareSideSize);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
@@ -202,19 +201,7 @@ public class ThreadsToolMainWindow extends JFrame
     {
         ThreadTextScrollPane.setBorder(BorderFactory.createEmptyBorder());
         CentralNorthPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-
-//        Border in = BorderFactory.createRaisedBevelBorder();
-//        Border out = BorderFactory.createEmptyBorder(10,10,10,10);
-//        centralImageLabel.setBorder(BorderFactory.createCompoundBorder(out,in));
-          centralImageLabel.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
-
-       // Border out2 = BorderFactory.createEmptyBorder(10,10,10,0);
-//        LabelsPanel.setBorder(BorderFactory.createCompoundBorder(out2, in));
-
-//        SessionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-//        SessionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,20));
-//        ActionTitlesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-//        ActionValuesPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        centralImageLabel.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
     }
 }
 

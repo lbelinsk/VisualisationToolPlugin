@@ -38,7 +38,7 @@ public class Thread implements Comparable<Thread>
     @Override
     public String toString()
     {
-        return " #" + threadId;
+        return threadId == 1 ? " Main" : " #" + threadId;
     }
 }
 
@@ -50,7 +50,6 @@ class ThreadAction
     String name;
     int startTime;
     int duration;
-    String callingMethod;
 
     // Relevant for NET threadActionType only
     String Url;

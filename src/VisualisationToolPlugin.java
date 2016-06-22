@@ -2,7 +2,6 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import org.jetbrains.annotations.Nullable;
 import org.json.*;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -13,15 +12,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Collections;
 import java.util.prefs.Preferences;
 
-import static org.apache.commons.codec.binary.Base64.decodeBase64;
 
 public class VisualisationToolPlugin extends AnAction
 {
     private static final String LAST_USED_FOLDER = "last_used_folder";
+    private static final int MAX_SESSIONS = 5;
     private List<JsonFile> jsonFilesList;
     private ArrayList<UserSession> sessionsList;
     private Preferences prefs = Preferences.userRoot().node(getClass().getName());
@@ -32,20 +32,20 @@ public class VisualisationToolPlugin extends AnAction
     @Override
     public void actionPerformed(AnActionEvent event)
     {
-        if (!initJsonFilesList())
+        Path dir = chooseDir();
+        if (dir == null)
+            return;
+
+        if (!initJsonFilesList(dir))
             return;
         initSessionsList();
         new ThreadsToolMainWindow("Threads Visualisation Tool", sessionsList);
     }
 
-    private Boolean initJsonFilesList()
+    private Boolean initJsonFilesList(Path dir)
     {
         this.jsonFilesList = new ArrayList<>();
         String jsonString;
-
-        Path dir = chooseDir();
-        if (dir == null)
-            return false;
 
         try (DirectoryStream<Path> stream =
              Files.newDirectoryStream(dir, "*.json")) {
@@ -137,7 +137,6 @@ public class VisualisationToolPlugin extends AnAction
 
     private void initJsonFile(JsonFile newJsonFile, JSONObject jsonObject, Path dir)
     {
-        //TODO: consider using jsonObject.get functions to throw an exception and inform the user.
         newJsonFile.model = jsonObject.optString("model");
         newJsonFile.vendor = jsonObject.optString("vendor");
         newJsonFile.OSName = jsonObject.optString("osname");

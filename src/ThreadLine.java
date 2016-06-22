@@ -10,18 +10,26 @@ class ThreadLine
     private int rowY;
     private List<Segment> segments = new ArrayList<>();
 
-    Segment selectSegment(int pixelX)
+    Segment selectSegment(int pixelX, boolean isMethodLineSelection)
     {
         for (int i = segments.size()-1; i>=0; i--)
         {
             Segment seg = segments.get(i);
-            if (seg.startX <= pixelX && seg.startX + seg.length >= pixelX)
+            if (needToSelect(seg, pixelX, isMethodLineSelection))
             {
-                seg.isSelected = true;
-                return seg;
+                    seg.isSelected = true;
+                    return seg;
             }
         }
         return null;
+    }
+
+    private boolean needToSelect(Segment seg, int pixelX, boolean isMethodLineSelection)
+    {
+        boolean coordinateXisOK = seg.startX <= pixelX && seg.startX + seg.length >= pixelX;
+        boolean rightType = (seg.action.type == ThreadActionType.METHOD && isMethodLineSelection) ||
+                            (seg.action.type != ThreadActionType.METHOD && !isMethodLineSelection);
+        return  coordinateXisOK && rightType;
     }
 
     void deselectSegments()
@@ -89,32 +97,32 @@ class ThreadLine
         //Fill threads background
         Color rowBackground = row % 2 == 0 ? ChartColors.EvenLineBackground : ChartColors.OddLineBackground;
         g.setColor(rowBackground);
-        g.fillRect(0, rowY - C.LineMargin/2, C.FullWidth, C.LineHeight + C.LineMargin);
+        g.fillRect(0, rowY - C.LineMargin/2, C.FullWidth, C.MethodLineHeight + C.LineMargin);
 
         //Write thread's Id (X,Y) = Bottom-Left corner
         g.setFont(new Font("Segoe UI", Font.BOLD, 18));
         g.setColor(JBColor.BLACK);
-        g.drawString(thread.toString(), 0, rowY + C.LineHeight);
+        g.drawString(thread.toString(), 0, rowY + C.MethodLineHeight);
 
         //Draw all thread actions
         for (Segment s : segments)
         {
             if (s.isSelected)
-            {
                 g.setColor(s.color.brighter().brighter());
-            }
             else
-            {
                 g.setColor(s.color);
-            }
-            g.fillRect(s.startX, s.startY, s.length, C.LineHeight);
+
+            if (s.action.type == ThreadActionType.METHOD)
+                g.fillRect(s.startX, s.startY, s.length, C.MethodLineHeight);
+            else
+                g.fillRect(s.startX, s.startY + C.OverlappingLineOffset, s.length, C.OverlappingLineHeight);
         }
     }
 
     void updateState()
     {
         segments.clear();
-        rowY = C.OriginY + row * (C.LineHeight + C.LineMargin);
+        rowY = C.OriginY + row * (C.MethodLineHeight + C.LineMargin);
 
         for (ThreadAction action : thread.threadActions)
         {

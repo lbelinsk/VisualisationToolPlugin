@@ -11,14 +11,17 @@ class C
 {
     static int ChartWidth;
     static int FullWidth;
-    static final int LineHeight = 20;
+    static final int MethodLineHeight = 20;
+    static final int OverlappingLineHeight = MethodLineHeight/2;
+    static final int OverlappingLineOffset = MethodLineHeight - OverlappingLineHeight;
     static final int LineMargin = 15;
-    static final int MarginX = 40;
+    static final int MarginX = 55;
     static final int MarginY = LineMargin/2;
     static int OriginX;
     static int OriginY;
     static int LastX;
     static Double Factor = 1.0;
+    static final int LegendSquareSideSize = 15;
 }
 
 class ChartColors
@@ -54,19 +57,40 @@ class ChartPanel extends JPanel
         deselectAllSegments();
         textPane.setText("");
 
-        int row = y / (C.LineMargin + C.LineHeight);
-        int offset = y % (C.LineMargin + C.LineHeight);
-        if (offset > C.MarginY &
-            offset < C.MarginY + C.LineHeight &&
-            row < threadLineList.size())
+        int row = y / (C.LineMargin + C.MethodLineHeight);
+        int offset = y % (C.LineMargin + C.MethodLineHeight);
+
+        if (row >= threadLineList.size())
         {
-            ThreadLine.Segment seg = threadLineList.get(row).selectSegment(x);
-            if (seg != null)
-            {
-                textPane.setText(seg.toString());
-            }
+            repaint();
+            return;
         }
+
+        ThreadLine line = threadLineList.get(row);
+        ThreadLine.Segment segment = null;
+
+        if (isOverlappingLineSelection(offset))
+            segment = line.selectSegment(x, false);
+
+        if (segment == null && isMethodLineSelection(offset))
+            segment = line.selectSegment(x, true);
+
+        if (segment != null)
+            textPane.setText(segment.toString());
+
         repaint();
+    }
+
+    private boolean isOverlappingLineSelection(int offset)
+    {
+        return offset > C.MarginY + C.OverlappingLineOffset &&
+               offset < C.MarginY + C.MethodLineHeight;
+    }
+
+    private boolean isMethodLineSelection(int offset)
+    {
+        return offset > C.MarginY &
+               offset < C.MarginY + C.MethodLineHeight;
     }
 
     private void deselectAllSegments()
@@ -99,7 +123,7 @@ class ChartPanel extends JPanel
                 RealDuration = thread.latestEnd;
         }
         RealDurationMilliSec = RealDuration;
-        preferredHeight = threads.size() * (C.LineHeight + C.LineMargin) + 2 * C.MarginY;
+        preferredHeight = threads.size() * (C.MethodLineHeight + C.LineMargin) + 2 * C.MarginY;
 
         updateChartDimension();
         fillThreadsList(threads);
