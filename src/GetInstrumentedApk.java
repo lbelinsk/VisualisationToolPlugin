@@ -77,7 +77,12 @@ public class GetInstrumentedApk extends AnAction {
                 String InstrumentedAPKPath = APKFilePath + ".inst.apk";
                 final InputStream istream = response.getEntity().getContent();
                 long InstrumentedFileLength = response.getEntity().getContentLength();
-                final OutputStream ostream = new FileOutputStream(InstrumentedAPKPath);
+
+                File outFile = new File(InstrumentedAPKPath);
+                if(!outFile.exists()) {
+                    outFile.createNewFile();
+                }
+                final OutputStream ostream = new FileOutputStream(outFile, false);
 
                 long totlalCoppied = 0;
                 final byte[] buffer = new byte[1024 * 8];
@@ -87,11 +92,13 @@ public class GetInstrumentedApk extends AnAction {
                         break;
                     }
                     totlalCoppied += len;
-                    int currentProgressPercentage = (int)((100 * (double)totlalCoppied) / (double)InstrumentedFileLength);
+                    int currentProgressPercentage = (int) ((100 * (double) totlalCoppied) / (double) InstrumentedFileLength);
                     publish(currentProgressPercentage);
                     ostream.write(buffer, 0, len);
 
                 }
+                ostream.close();
+                istream.close();
                 finishedInstAPKCreation = true;
                 return null;
             }
@@ -148,10 +155,9 @@ public class GetInstrumentedApk extends AnAction {
         dialog.getContentPane().add(panel);
         dialog.setResizable(false);
         dialog.pack();
-        dialog.setSize(500, dialog.getHeight());
+        dialog.setSize(500, dialog.getHeight() + 10);
         dialog.setLocation(dialog.getParent().getLocation());
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialog.setAlwaysOnTop(false);
         dialog.setVisible(true);
         msgLabel.setBackground(panel.getBackground());
     }
