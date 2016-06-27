@@ -5,10 +5,8 @@ import org.json.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,10 +16,13 @@ import java.util.List;
 import java.util.Collections;
 import java.util.prefs.Preferences;
 
+import static javax.swing.JOptionPane.*;
+
 
 public class VisualisationToolPlugin extends AnAction
 {
     private static final String LAST_USED_FOLDER = "last_used_folder";
+    private static final String ADB_FILE_FOUND = "adb_file_found";
     private static final int MAX_SESSIONS = 5;
     private List<JsonFile> jsonFilesList;
     private ArrayList<UserSession> sessionsList;
@@ -33,43 +34,69 @@ public class VisualisationToolPlugin extends AnAction
     @Override
     public void actionPerformed(AnActionEvent event)
     {
-        String line = "";
-        Runtime runtime = Runtime.getRuntime();
-        String SDK_path = System.getenv("ANDROID_HOME");
-        if (!SDK_path.isEmpty())
-        {
-            String ADB_path = SDK_path + "\\platform-tools\\adb.exe";
-            if (new File(ADB_path).exists())
-            {
-                try
-                {
-                    Path dir = Paths.get(System.getProperty("user.dir"));
-                    //need to create new directory HPActionAnalysis?
-                    //Path destDir = dir.resolve("HPActionAnalysis");
-                    Process process = runtime.exec(new String[]
-                            {
-                                ADB_path,
-                                "pull",
-                                "/sdcard/HPActionAnalysis/com.kayak.android",
-                                dir.toString()
-                            });
-                    process.waitFor();
-                } catch (Exception e)
-                {
-                    System.err.format("ADB Exception: %s%n", e);
-                }
-            }
-        }
+        Path jsonsDir = null;
+        Object[] options = {"Computer", "Phone (ADB)"};
+        int response = JOptionPane.showOptionDialog(new JFrame(),
+                "Would you like to choose HPE Analysis folder from the computer or " +
+                "to transfer it from plugged phone using ADB?\n" +
+                "(adb.exe is usually under \\\\Android\\sdk\\platform-tools\\adb.exe)",
+                "Choose option",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,     //do not use a custom Icon
+                options,  //the titles of buttons
+                options[0]); //default button title
 
-        Path dir = chooseDir();
-        if (dir == null)
+        if (response == CLOSED_OPTION)
             return;
 
-        if (!initJsonFilesList(dir))
+        switch (response)
+        {
+            case YES_OPTION:
+                jsonsDir = chooseDir();
+                break;
+            case NO_OPTION:
+            {
+                String ADB_path = chooseADB();
+
+                if (new File(ADB_path).exists())
+                {
+                    try
+                    {
+                        //TODO: create new folder in TEMP
+                        Path dir = Paths.get(System.getProperty("user.home"));
+                        dir = dir.resolve("TEMP");
+
+                        ProcessBuilder pb = new ProcessBuilder
+                                (
+                                        ADB_path,
+                                        "pull",
+                                        "/sdcard/HPActionAnalysis/com.kayak.android",
+                                        dir.toString()
+                                );
+                        Process pc = pb.start();
+                        pc.waitFor();
+                    } catch (Exception e)
+                    {
+                        System.err.format("ADB Exception: %s%n", e);
+                    }
+                }
+            }
+
+            //TODO: open the chooser in a right place (new dir pulled from phone)
+            jsonsDir = chooseDir();
+        }
+
+        if (jsonsDir == null)
+            return;
+
+        if (!initJsonFilesList(jsonsDir))
             return;
         initSessionsList();
         new ThreadsToolMainWindow("Threads Visualisation Tool", sessionsList);
     }
+
+
 
     private Boolean initJsonFilesList(Path dir)
     {
@@ -146,6 +173,47 @@ public class VisualisationToolPlugin extends AnAction
         {
             prefs.put(LAST_USED_FOLDER, choice.getParent());
             return Paths.get(choice.getAbsolutePath());
+        }
+    }
+
+    private String chooseADB()
+    {
+        String adbPath = prefs.get(ADB_FILE_FOUND, "");
+        if (adbPath != "")
+        {
+            return adbPath;
+        }
+        else
+        {
+            File defaultFolder = new File(Paths.get(System.getProperty("user.home")).toString());
+            JFileChooser chooser = new JFileChooser(defaultFolder.getAbsolutePath());
+            chooser.setDialogTitle("Choose adb.exe file");
+            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            chooser.setApproveButtonText("OK");
+
+            File choice = null;
+            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+            {
+                if (chooser.getSelectedFile() != null && chooser.getSelectedFile().exists())
+                {
+                    choice = chooser.getSelectedFile();
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            if (choice == null || !choice.getName().toLowerCase().endsWith("adb.exe"))
+            {
+                JOptionPane.showMessageDialog(null,"No valid adb.exe file was chosen.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            }
+            else
+            {
+                prefs.put(ADB_FILE_FOUND, Paths.get(choice.getAbsolutePath()).toString());
+                return Paths.get(choice.getAbsolutePath()).toString();
+            }
         }
     }
 
