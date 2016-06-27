@@ -21,10 +21,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.util.List;
 
-
-/**
- * Created by Lior on 19/06/2016.
- */
 public class GetInstrumentedApk extends AnAction {
     private static final String LAST_USED_FOLDER = "last_used_folder2";
     private Preferences prefs = Preferences.userRoot().node(getClass().getName());
@@ -42,8 +38,6 @@ public class GetInstrumentedApk extends AnAction {
 
     boolean isAdaptedOnClose = false;
     boolean finishedInstAPKCreation = false;
-
-    SwingWorker worker;
 
     @Override
     public void actionPerformed(AnActionEvent e) {

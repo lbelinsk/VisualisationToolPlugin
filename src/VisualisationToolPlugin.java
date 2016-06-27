@@ -5,14 +5,15 @@ import org.json.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Collections;
 import java.util.prefs.Preferences;
@@ -32,6 +33,34 @@ public class VisualisationToolPlugin extends AnAction
     @Override
     public void actionPerformed(AnActionEvent event)
     {
+        String line = "";
+        Runtime runtime = Runtime.getRuntime();
+        String SDK_path = System.getenv("ANDROID_HOME");
+        if (!SDK_path.isEmpty())
+        {
+            String ADB_path = SDK_path + "\\platform-tools\\adb.exe";
+            if (new File(ADB_path).exists())
+            {
+                try
+                {
+                    Path dir = Paths.get(System.getProperty("user.dir"));
+                    //need to create new directory HPActionAnalysis?
+                    //Path destDir = dir.resolve("HPActionAnalysis");
+                    Process process = runtime.exec(new String[]
+                            {
+                                ADB_path,
+                                "pull",
+                                "/sdcard/HPActionAnalysis/com.kayak.android",
+                                dir.toString()
+                            });
+                    process.waitFor();
+                } catch (Exception e)
+                {
+                    System.err.format("ADB Exception: %s%n", e);
+                }
+            }
+        }
+
         Path dir = chooseDir();
         if (dir == null)
             return;
@@ -212,6 +241,8 @@ public class VisualisationToolPlugin extends AnAction
             else
             {
                 sessionsList.add(new UserSession(allJsonFiles[i]));
+                if (sessionsList.size() >= MAX_SESSIONS)
+                    break;
             }
         }
     }
