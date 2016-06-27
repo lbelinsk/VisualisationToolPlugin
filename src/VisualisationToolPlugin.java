@@ -5,8 +5,10 @@ import org.json.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,38 +55,42 @@ public class VisualisationToolPlugin extends AnAction
         switch (response)
         {
             case YES_OPTION:
-                jsonsDir = chooseDir();
+                jsonsDir = chooseDir(null);
                 break;
             case NO_OPTION:
             {
                 String ADB_path = chooseADB();
-
                 if (new File(ADB_path).exists())
                 {
                     try
                     {
-                        //TODO: create new folder in TEMP
-                        Path dir = Paths.get(System.getProperty("user.home"));
-                        dir = dir.resolve("TEMP");
+                        Path HPE_Temp_Dir = Paths.get(System.getProperty("java.io.tmpdir")).resolve("HPEActionAnalysis");
+                        new File(HPE_Temp_Dir.toString()).mkdirs();
 
                         ProcessBuilder pb = new ProcessBuilder
                                 (
                                         ADB_path,
                                         "pull",
-                                        "/sdcard/HPActionAnalysis/com.kayak.android",
-                                        dir.toString()
+                                        "/sdcard/HPActionAnalysis",
+                                        HPE_Temp_Dir.toString()
                                 );
-                        Process pc = pb.start();
-                        pc.waitFor();
+
+                        pb.redirectErrorStream(true);
+                        Process process = pb.start();
+                        BufferedReader reader =
+                                new BufferedReader(new InputStreamReader(process.getInputStream()));
+//                        String line;
+                        while (reader.readLine() != null) {}
+
+                        process.waitFor();
+
+                        jsonsDir = chooseDir(HPE_Temp_Dir.toAbsolutePath().toString());
                     } catch (Exception e)
                     {
                         System.err.format("ADB Exception: %s%n", e);
                     }
                 }
             }
-
-            //TODO: open the chooser in a right place (new dir pulled from phone)
-            jsonsDir = chooseDir();
         }
 
         if (jsonsDir == null)
@@ -136,10 +142,20 @@ public class VisualisationToolPlugin extends AnAction
     }
 
     @Nullable
-    private Path chooseDir()
+    private Path chooseDir(String pulledDir)
     {
         File defaultFolder = new File(Paths.get(System.getProperty("user.home")).toString());
-        JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER, defaultFolder.getAbsolutePath()));
+
+        JFileChooser chooser;
+        if (pulledDir == null)
+        {
+            chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER, defaultFolder.getAbsolutePath()));
+        }
+        else
+        {
+            chooser = new JFileChooser(pulledDir);
+        }
+
         chooser.setDialogTitle("Choose directory of json files");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setApproveButtonText("OK");
