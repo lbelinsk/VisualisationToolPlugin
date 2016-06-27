@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 import java.util.prefs.Preferences;
-
 import static javax.swing.JOptionPane.*;
 
 
@@ -79,7 +78,6 @@ public class VisualisationToolPlugin extends AnAction
                         Process process = pb.start();
                         BufferedReader reader =
                                 new BufferedReader(new InputStreamReader(process.getInputStream()));
-//                        String line;
                         while (reader.readLine() != null) {}
 
                         process.waitFor();

@@ -1,6 +1,5 @@
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Path;
@@ -21,113 +20,150 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.util.List;
 
-public class GetInstrumentedApk extends AnAction {
+public class GetInstrumentedApk extends AnAction
+{
     private static final String LAST_USED_FOLDER = "last_used_folder2";
+    private static final String ADB_FILE_FOUND = "adb_file_found";
     private Preferences prefs = Preferences.userRoot().node(getClass().getName());
-    final JDialog dialog = new JDialog();
-    JPanel panel = new JPanel(new BorderLayout(5, 5));
-    JTextArea msgLabel = new JTextArea("");
-    final int MAXIMUM = 100;
-    JProgressBar progressBar = new JProgressBar(0, MAXIMUM);
-    String APKFilePath;
-    File ApkFile;
+    private final JDialog dialog = new JDialog();
+    private JPanel panel = new JPanel(new BorderLayout(5, 5));
+    private JTextArea msgLabel = new JTextArea("");
+    private final int MAXIMUM = 100;
+    private JProgressBar progressBar = new JProgressBar(0, MAXIMUM);
+    private String APKFilePath;
+    private File ApkFile;
 
-    HttpClient httpclient = HttpClients.createDefault();
-    HttpPost httppost = new HttpPost("http://52.1.231.128:8282/easywrapper/uploadService");
-    HttpGet httpGet = new HttpGet("");
+    private HttpClient httpclient = HttpClients.createDefault();
+    private HttpPost httppost;
+    private HttpGet httpGet = new HttpGet("");
 
-    boolean isAdaptedOnClose = false;
-    boolean finishedInstAPKCreation = false;
+    private boolean isAdaptedOnClose = false;
+    private boolean finishedInstAPKCreation = false;
 
     @Override
-    public void actionPerformed(AnActionEvent e) {
+    public void actionPerformed(AnActionEvent e)
+    {
+
+        String ADB_path = chooseADB();
         Path path = chooseFile();
         if (path == null) return;
         APKFilePath = path.toString();
         ApkFile = new File(APKFilePath);
         setProgressDialog("Uploading APK file...");
 
-        SwingWorker worker = new SwingWorker<Void, Integer>() {
+        SwingWorker worker = new SwingWorker<Void, Integer>()
+        {
             @Override
-            public Void doInBackground() throws Exception {
+            public Void doInBackground()
+            {
 
                 MultipartEntityBuilder builder = MultipartEntityBuilder.create();
                 builder.addPart("file", new FileBody(ApkFile));
+                try
+                {
+                    httppost = new HttpPost("http://52.1.231.128:8282/easywrapper/uploadService");
+                    httppost.setEntity(builder.build());
+                    HttpResponse response = httpclient.execute(httppost);
+                    HttpEntity entity = response.getEntity();
+                    String responseString = EntityUtils.toString(entity);
 
-                httppost = new HttpPost("http://52.1.231.128:8282/easywrapper/uploadService");
+                    String instrumentedBodyResponse = responseString.split("'")[1];
+                    httpGet = new HttpGet(instrumentedBodyResponse);
 
-                httppost.setEntity(builder.build());
-                HttpResponse response = httpclient.execute(httppost);
-                HttpEntity entity = response.getEntity();
-                String responseString = EntityUtils.toString(entity);
+                    publish(-1);
+                    response = httpclient.execute(httpGet);
 
-                String instrumentedBodyResponse = responseString.split("'")[1];
-                httpGet = new HttpGet(instrumentedBodyResponse);
+                    // Copy the response Instrumented APK File
+                    String InstrumentedAPKPath = APKFilePath + ".inst.apk";
+                    final InputStream istream = response.getEntity().getContent();
+                    long InstrumentedFileLength = response.getEntity().getContentLength();
 
-                publish(-1);
-                response = httpclient.execute(httpGet);
-
-                // Copy the response Instrumented APK File
-                String InstrumentedAPKPath = APKFilePath + ".inst.apk";
-                final InputStream istream = response.getEntity().getContent();
-                long InstrumentedFileLength = response.getEntity().getContentLength();
-
-                File outFile = new File(InstrumentedAPKPath);
-                if(!outFile.exists()) {
-                    outFile.createNewFile();
-                }
-                final OutputStream ostream = new FileOutputStream(outFile, false);
-
-                long totlalCoppied = 0;
-                final byte[] buffer = new byte[1024 * 8];
-                while (!isCancelled()) {
-                    final int len = istream.read(buffer);
-                    if (len <= 0) {
-                        break;
+                    File outFile = new File(InstrumentedAPKPath);
+                    if (!outFile.exists())
+                    {
+                        outFile.createNewFile();
                     }
-                    totlalCoppied += len;
-                    int currentProgressPercentage = (int) ((100 * (double) totlalCoppied) / (double) InstrumentedFileLength);
-                    publish(currentProgressPercentage);
-                    ostream.write(buffer, 0, len);
+                    final OutputStream ostream = new FileOutputStream(outFile, false);
 
+                    long totlalCoppied = 0;
+                    final byte[] buffer = new byte[1024 * 8];
+                    while (!isCancelled())
+                    {
+                        final int len = istream.read(buffer);
+                        if (len <= 0)
+                        {
+                            break;
+                        }
+                        totlalCoppied += len;
+                        int currentProgressPercentage = (int) ((100 * (double) totlalCoppied) / (double) InstrumentedFileLength);
+                        publish(currentProgressPercentage);
+                        ostream.write(buffer, 0, len);
+
+                    }
+                    ostream.close();
+                    istream.close();
+                    finishedInstAPKCreation = true;
+
+                    if (ADB_path != null)
+                    {
+                        ProcessBuilder pb = new ProcessBuilder
+                                (
+                                        ADB_path,
+                                        "install",
+                                        InstrumentedAPKPath
+                                );
+                        pb.redirectErrorStream(true);
+                        Process process = pb.start();
+                        BufferedReader reader =
+                                new BufferedReader(new InputStreamReader(process.getInputStream()));
+                        while (reader.readLine() != null)
+                        {
+                        }
+                        process.waitFor();
+                    }
+                } catch (Exception e)
+                {
+                    System.err.format("Exception: %s%n", e);
                 }
-                ostream.close();
-                istream.close();
-                finishedInstAPKCreation = true;
                 return null;
             }
 
             @Override
-            public void done() {
+            public void done()
+            {
                 dialog.dispose();
                 progressBar.setValue(0);
             }
 
             @Override
-            protected void process(List<Integer> data) {
-                if(data.get(0) == -1) {
+            protected void process(List<Integer> data)
+            {
+                if (data.get(0) == -1)
+                {
                     msgLabel.setText("Downloading Instrumented APK file...");
                     progressBar.setIndeterminate(false);
                     progressBar.setStringPainted(true);
                     return;
                 }
-                    progressBar.setValue(data.get(0));
+                progressBar.setValue(data.get(0));
             }
-
         };
         worker.execute();
     }
 
     private void setProgressDialog(String title)
     {
-        if(!isAdaptedOnClose) {
+        if (!isAdaptedOnClose)
+        {
             isAdaptedOnClose = true;
-            dialog.addWindowListener(new WindowAdapter() {
+            dialog.addWindowListener(new WindowAdapter()
+            {
                 @Override
-                public void windowClosed(WindowEvent e) {
+                public void windowClosed(WindowEvent e)
+                {
                     httppost.abort();
                     httpGet.abort();
-                    if(!finishedInstAPKCreation)
+                    if (!finishedInstAPKCreation)
                         JOptionPane.showMessageDialog(null, "Aborted the Instrumented Apk file creation", "Error", JOptionPane.INFORMATION_MESSAGE);
                     finishedInstAPKCreation = false;
                 }
@@ -157,35 +193,82 @@ public class GetInstrumentedApk extends AnAction {
     }
 
     @Nullable
-    private Path chooseFile() {
+    private Path chooseFile()
+    {
         File defaultFolder = new File(Paths.get(System.getProperty("user.home")).toString());
         JFileChooser chooser = new JFileChooser(prefs.get(LAST_USED_FOLDER, defaultFolder.getAbsolutePath()));
         chooser.setDialogTitle("Choose an APK File");
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         chooser.setApproveButtonText("OK");
         File choice = null;
-        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            if (chooser.getSelectedFile() != null) {
-                if (chooser.getSelectedFile().exists()) {
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+        {
+            if (chooser.getSelectedFile() != null)
+            {
+                if (chooser.getSelectedFile().exists())
+                {
                     choice = chooser.getSelectedFile();
-                } else {
+                } else
+                {
                     choice = new File(chooser.getSelectedFile().getParent());
                 }
             }
-        } else {
+        } else
+        {
             return null;
         }
 
-        if (choice == null || !isAPKFile(choice)) {
+        if (choice == null || !isAPKFile(choice))
+        {
             JOptionPane.showMessageDialog(null, "None valid APK File was chosen.", "Error", JOptionPane.INFORMATION_MESSAGE);
             return null;
-        } else {
+        } else
+        {
             prefs.put(LAST_USED_FOLDER, choice.getParent());
             return Paths.get(choice.getAbsolutePath());
         }
     }
 
-    private boolean isAPKFile(File file) {
+    private String chooseADB()
+    {
+        String adbPath = prefs.get(ADB_FILE_FOUND, "");
+        if (adbPath != "")
+        {
+            return adbPath;
+        } else
+        {
+            File defaultFolder = new File(Paths.get(System.getProperty("user.home")).toString());
+            JFileChooser chooser = new JFileChooser(defaultFolder.getAbsolutePath());
+            chooser.setDialogTitle("Choose adb.exe file");
+            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            chooser.setApproveButtonText("OK");
+
+            File choice = null;
+            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+            {
+                if (chooser.getSelectedFile() != null && chooser.getSelectedFile().exists())
+                {
+                    choice = chooser.getSelectedFile();
+                }
+            } else
+            {
+                return null;
+            }
+
+            if (choice == null || !choice.getName().toLowerCase().endsWith("adb.exe"))
+            {
+                JOptionPane.showMessageDialog(null, "No valid adb.exe file was chosen.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                return null;
+            } else
+            {
+                prefs.put(ADB_FILE_FOUND, Paths.get(choice.getAbsolutePath()).toString());
+                return Paths.get(choice.getAbsolutePath()).toString();
+            }
+        }
+    }
+
+    private boolean isAPKFile(File file)
+    {
         return (file.exists() && file.isFile() && file.toString().toLowerCase().endsWith(".apk"));
     }
 }
