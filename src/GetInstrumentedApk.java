@@ -24,7 +24,7 @@ public class GetInstrumentedApk extends AnAction
 {
     private static final String LAST_USED_FOLDER = "last_used_folder2";
     private static final String ADB_FILE_FOUND = "adb_file_found";
-    private Preferences prefs = Preferences.userRoot().node(getClass().getName());
+    public Preferences prefs = Preferences.userRoot().node(getClass().getName());
     private final JDialog dialog = new JDialog();
     private JPanel panel = new JPanel(new BorderLayout(5, 5));
     private JTextArea msgLabel = new JTextArea("");
@@ -43,8 +43,7 @@ public class GetInstrumentedApk extends AnAction
     @Override
     public void actionPerformed(AnActionEvent e)
     {
-
-        String ADB_path = chooseADB();
+        String ADB_path = ADBChooser.getInstance().choose(prefs);
         Path path = chooseFile();
         if (path == null) return;
         APKFilePath = path.toString();
@@ -226,44 +225,6 @@ public class GetInstrumentedApk extends AnAction
         {
             prefs.put(LAST_USED_FOLDER, choice.getParent());
             return Paths.get(choice.getAbsolutePath());
-        }
-    }
-
-    private String chooseADB()
-    {
-        String adbPath = prefs.get(ADB_FILE_FOUND, "");
-        if (adbPath != "")
-        {
-            return adbPath;
-        } else
-        {
-            File defaultFolder = new File(Paths.get(System.getProperty("user.home")).toString());
-            JFileChooser chooser = new JFileChooser(defaultFolder.getAbsolutePath());
-            chooser.setDialogTitle("Choose adb.exe file");
-            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            chooser.setApproveButtonText("OK");
-
-            File choice = null;
-            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-            {
-                if (chooser.getSelectedFile() != null && chooser.getSelectedFile().exists())
-                {
-                    choice = chooser.getSelectedFile();
-                }
-            } else
-            {
-                return null;
-            }
-
-            if (choice == null || !choice.getName().toLowerCase().endsWith("adb.exe"))
-            {
-                JOptionPane.showMessageDialog(null, "No valid adb.exe file was chosen.", "Error", JOptionPane.INFORMATION_MESSAGE);
-                return null;
-            } else
-            {
-                prefs.put(ADB_FILE_FOUND, Paths.get(choice.getAbsolutePath()).toString());
-                return Paths.get(choice.getAbsolutePath()).toString();
-            }
         }
     }
 
