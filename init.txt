@@ -1,0 +1,9 @@
+1. Download and install java jdk 8u91 64 bit
+2. Add JAVA_HOME variable to path
+3. Download and install Android Studio
+4. Download and install IntelliJ Idea - https://www.jetbrains.com/idea/download/#section=windows
+5. Download and install GitHub for windows - https://git-for-windows.github.io/
+6. Setting Up a Development Environment - http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/setting_up_environment.html
+7. Creating Your First Plugin - http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started.html
+
+Blog describing steps to create a plugin - http://bjorn.tipling.com/how-to-make-an-intellij-idea-plugin-in-30-minutes
